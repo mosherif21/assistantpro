@@ -1,0 +1,74 @@
+name: assistantpro
+description: IoT Assistant
+
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.5 <3.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+  mqtt_client: ^9.7.2
+  shared_preferences: ^2.0.15
+  firebase_core: ^2.3.0
+  firebase_auth: ^4.1.4
+  firebase_app_check: ^0.1.1+5
+  firebase_database: ^10.0.6
+  firebase_storage: ^11.0.6
+  google_fonts: ^3.0.1
+  flutter_native_splash: ^2.2.16
+  liquid_swipe: ^3.0.0
+  smooth_page_indicator: ^1.0.0+2
+  flutter_web_frame: ^0.0.3
+  get: ^4.6.5
+  lottie: ^2.0.0
+  flutter_signin_button: ^2.0.0
+  font_awesome_flutter: ^9.2.0
+  connectivity_plus: ^3.0.2
+  internet_connection_checker_plus: ^1.0.1
+  flutter_otp_text_field: ^1.1.0+2
+  loading_animation_widget: ^1.2.0+3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+
+
+flutter_native_splash:
+  color: "#303030"
+  image: assets/images/logo.png
+  image_dark: assets/images/logo.png
+  #branding: assets/images/logo.png
+  #branding_dark: assets/images/logo.png
+
+  android_12:
+    color: "#303030"
+    color_dark: "#303030"
+    image: assets/images/logo.png
+    image_dark: assets/images/logo.png
+    #branding: assets/images/logo.png
+    #branding_dark: assets/images/logo.png
+flutter:
+
+
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/fonts/
+    - assets/images/
+    - assets/logos/
+    - assets/videos/
+    - assets/lottie_animations/
+
