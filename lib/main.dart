@@ -19,10 +19,10 @@ void main() async {
   await AppInit.initializeConstants();
   if (AppInit.isWeb) {
     MQTTClientBrowserWrapper newClient = MQTTClientBrowserWrapper();
-    await newClient.prepareMqttClient();
+    // await newClient.prepareMqttClient();
   } else {
     MQTTClientServerWrapper newClient = MQTTClientServerWrapper();
-    await newClient.prepareMqttClient();
+    // await newClient.prepareMqttClient();
   }
 
   runApp(const MyApp());
