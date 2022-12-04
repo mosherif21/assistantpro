@@ -18,11 +18,11 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await AppInit.initializeConstants();
   if (AppInit.isWeb) {
-    MQTTClientBrowserWrapper newClient = MQTTClientBrowserWrapper();
-    // await newClient.prepareMqttClient();
+    MQTTClientBrowserWrapper client = MQTTClientBrowserWrapper();
+    // await client.prepareMqttClient();
   } else {
-    MQTTClientServerWrapper newClient = MQTTClientServerWrapper();
-    // await newClient.prepareMqttClient();
+    MQTTClientServerWrapper client = MQTTClientServerWrapper();
+    // await client.prepareMqttClient();
   }
 
   runApp(const MyApp());
