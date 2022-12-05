@@ -58,7 +58,7 @@ class EmailRegisterForm extends StatelessWidget {
                 final passwordConfirm = controller.passwordConfirm.text;
                 showLoadingScreen();
                 if (password.compareTo(passwordConfirm) == 0 &&
-                    password.length > 8) {
+                    password.length >= 8) {
                   await RegisterController.instance.registerNewUser(
                     email,
                     password,

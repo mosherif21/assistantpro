@@ -1,7 +1,4 @@
-import 'package:assistantpro/src/constants/app_init_constants.dart';
-import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
 import 'package:assistantpro/src/features/home_page/screens/home_page.dart';
-import 'package:assistantpro/src/features/onboarding/screens/on_boarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -14,19 +11,13 @@ class AuthenticationRepository extends GetxController {
   //vars
   final _auth = FirebaseAuth.instance;
   late final Rx<User?> fireUser;
+  bool isUserLoggedIn = false;
   @override
   void onReady() {
     fireUser = Rx<User?>(_auth.currentUser);
-    fireUser.bindStream(_auth.userChanges());
-    ever(fireUser, (callback) => _initialScreen);
-  }
+    if (fireUser.value != null) isUserLoggedIn = true;
 
-  _initialScreen(User? user) {
-    user == null
-        ? AppInit.showOnBoard
-            ? Get.offAll(() => const OnBoardingScreen())
-            : Get.offAll(() => const LoginScreen())
-        : Get.offAll(() => const HomePage());
+    fireUser.bindStream(_auth.userChanges());
   }
 
   Future<String> createUserWithEmailAndPassword(
@@ -34,9 +25,8 @@ class AuthenticationRepository extends GetxController {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      fireUser.value != null
-          ? Get.offAll(() => const HomePage())
-          : Get.offAll(() => const LoginScreen());
+      if (fireUser.value != null) Get.offAll(() => const HomePage());
+      isUserLoggedIn = true;
       return 'success';
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailAndPasswordFailure.code(e.code);

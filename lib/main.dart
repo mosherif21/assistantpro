@@ -1,6 +1,7 @@
 import 'package:assistantpro/src/connectivity/connectivity_controller.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
+import 'package:assistantpro/src/features/home_page/screens/home_page.dart';
 import 'package:assistantpro/src/features/onboarding/screens/on_boarding_screen.dart';
 import 'package:assistantpro/src/routing/splash_screen.dart';
 import 'package:assistantpro/src/utils/theme/theme.dart';
@@ -22,7 +23,8 @@ void main() async {
   final internetConnectionStatus =
       await InternetConnectionCheckerPlus().connectionStatus;
   if (internetConnectionStatus == InternetConnectionStatus.connected) {
-    AppInit.initialize().then((value) => Get.put(AuthenticationRepository()));
+    await AppInit.initialize()
+        .then((value) => Get.put(AuthenticationRepository()));
   }
 
   runApp(const MyApp());
@@ -45,7 +47,9 @@ class MyApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           home: AppInit.showOnBoard
               ? const OnBoardingScreen()
-              : const LoginScreen(),
+              : AuthenticationRepository.instance.isUserLoggedIn
+                  ? const HomePage()
+                  : const LoginScreen(),
         );
       },
       maximumSize: const Size(500.0, 812.0),
