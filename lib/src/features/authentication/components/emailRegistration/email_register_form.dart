@@ -53,26 +53,12 @@ class EmailRegisterForm extends StatelessWidget {
               buttonText: 'registerTextTitle'.tr,
               height: height,
               onPressed: () async {
-                final email = controller.email.text;
-                final password = controller.password.text;
-                final passwordConfirm = controller.passwordConfirm.text;
                 showLoadingScreen();
-                if (password.compareTo(passwordConfirm) == 0 &&
-                    password.length >= 8) {
-                  await RegisterController.instance.registerNewUser(
-                    email,
-                    password,
-                  );
-                } else if (email.isEmpty ||
-                    password.isEmpty ||
-                    passwordConfirm.isEmpty) {
-                  controller.returnMessage.value = 'Fields can\'t be empty';
-                } else if (password.length < 8) {
-                  controller.returnMessage.value =
-                      'Password can\'t be less than 8 characters';
-                } else {
-                  controller.returnMessage.value = 'Passwords doesn\'t match';
-                }
+                await RegisterController.instance.registerNewUser(
+                  controller.email.text,
+                  controller.password.text,
+                  controller.passwordConfirm.text,
+                );
                 hideLoadingScreen();
               },
             ),

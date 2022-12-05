@@ -19,13 +19,15 @@ void getToEmailVerificationScreen() {
       buttonTitle: 'continue'.tr,
       onPressed: () => Get.to(
           () => OTPVerificationScreen(
+                inputType: InputType.email,
                 verificationType: 'emailLabel'.tr,
                 lottieAssetAnim: kEmailOTPAnim,
                 enteredString: 'text',
+                inputOperation: InputOperation.passwordReset,
               ),
           transition: AppInit.getPageTransition()),
-      inputType: InputType.email,
       textController: controller.enteredData,
+      inputType: InputType.email,
     ),
     transition: AppInit.getPageTransition(),
   );

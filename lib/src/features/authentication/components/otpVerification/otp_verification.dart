@@ -1,5 +1,6 @@
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/constants/sizes.dart';
+import 'package:assistantpro/src/features/authentication/controllers/otp_verification_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
@@ -15,16 +16,20 @@ class OTPVerificationScreen extends StatelessWidget {
       {Key? key,
       required this.verificationType,
       required this.lottieAssetAnim,
-      required this.enteredString})
+      required this.enteredString,
+      required this.inputType,
+      required this.inputOperation})
       : super(key: key);
   final String verificationType;
   final String lottieAssetAnim;
   final String enteredString;
+  final InputType inputType;
+  final InputOperation inputOperation;
 
   @override
   Widget build(BuildContext context) {
     double? screenHeight = getScreenHeight(context);
-    // String verificationCode = '';
+    //String verificationCode = '';
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -82,41 +87,46 @@ class OTPVerificationScreen extends StatelessWidget {
                   fontSize: 25.0,
                   fontWeight: FontWeight.w600),
               borderWidth: 4.0,
-              onCodeChanged: (code) {
-                _confirmButtonEnable.value = false;
-              },
-              onSubmit: (enteredVerificationCode) {
+              // onCodeChanged: (code) {
+              //   _confirmButtonEnable.value = false;
+              // },
+              onSubmit: (enteredVerificationCode) async {
                 _confirmButtonEnable.value = true;
-                //  verificationCode = enteredVerificationCode;
+                await OtpVerificationController.instance.verifyOTP(
+                    verificationCode: enteredVerificationCode,
+                    inputType: inputType,
+                    inputOperation: inputOperation);
               },
             ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: screenHeight * 0.05,
-              child: Obx(
-                () => ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(3),
-                      ),
-                    ),
-                  ),
-                  onPressed: _confirmButtonEnable.value ? () {} : null,
-                  child: Text(
-                    'confirm'.tr,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ),
-            ),
+            // const SizedBox(
+            //   height: 30.0,
+            // ),
+            // SizedBox(
+            //   width: double.infinity,
+            //   height: screenHeight * 0.05,
+            //   child: Obx(
+            //     () => ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //         elevation: 0,
+            //         backgroundColor: Colors.black,
+            //         foregroundColor: Colors.white,
+            //         shape: const RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.all(
+            //             Radius.circular(3),
+            //           ),
+            //         ),
+            //       ),
+            //       onPressed: _confirmButtonEnable.value
+            //           ? () async => verifyOTP()
+            //           : null,
+            //       child: Text(
+            //         'confirm'.tr,
+            //         style: const TextStyle(
+            //             color: Colors.white, fontWeight: FontWeight.w500),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

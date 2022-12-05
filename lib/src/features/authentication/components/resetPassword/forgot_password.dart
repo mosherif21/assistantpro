@@ -1,4 +1,5 @@
 import 'package:assistantpro/src/common_widgets/regular_bottom_sheet.dart';
+import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +42,8 @@ class ForgetPasswordLayout extends StatelessWidget {
             iconData: Icons.mobile_friendly_rounded,
             onPressed: () {
               RegularBottomSheet.hideBottomSheet();
-              getToPhoneVerificationScreen();
+              getToPhoneVerificationScreen(
+                  inputOperation: InputOperation.passwordReset);
             },
           ),
         ],

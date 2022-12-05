@@ -4,6 +4,8 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:get/get.dart';
 
+import '../otpVerification/phone_verification_screen.dart';
+
 class AlternateLoginButtons extends StatelessWidget {
   final double screenHeight;
   final double screenWidth;
@@ -23,7 +25,9 @@ class AlternateLoginButtons extends StatelessWidget {
         SignInButton(
           Buttons.Phone,
           text: 'loginWithMobile'.tr,
-          onPressed: () {},
+          onPressed: () => getToPhoneVerificationScreen(
+            inputOperation: InputOperation.signIn,
+          ),
           height: buttonsHeight,
           width: buttonsWidth,
         ),

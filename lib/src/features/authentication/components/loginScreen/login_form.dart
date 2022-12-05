@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../../common_widgets/regular_bottom_sheet.dart';
 import '../../../../common_widgets/regular_elevated_button.dart';
 import '../../../../common_widgets/text_form_field.dart';
+import '../../../../routing/loading_screen.dart';
 import '../resetPassword/forgot_password.dart';
 
 class LoginForm extends StatelessWidget {
@@ -49,13 +50,23 @@ class LoginForm extends StatelessWidget {
                     const ForgetPasswordLayout()),
               ),
             ),
+            Obx(
+              () => controller.returnMessage.value.compareTo('success') != 0
+                  ? Text(
+                      controller.returnMessage.value,
+                      style: const TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
+            ),
             const SizedBox(height: 6),
             RegularElevatedButton(
               buttonText: 'loginTextTitle'.tr,
               height: height,
-              onPressed: () {
-                controller.loginUser(
+              onPressed: () async {
+                showLoadingScreen();
+                await controller.loginUser(
                     controller.email.text, controller.password.text);
+                hideLoadingScreen();
               },
             ),
           ],

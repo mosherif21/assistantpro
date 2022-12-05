@@ -8,12 +8,12 @@ import '../../firebase/firebase_initializations.dart';
 import '../../localization/language/language_functions.dart';
 import '../features/onboarding/components/onboarding_shared_preferences.dart';
 import '../routing/splash_screen.dart';
-// import 'package:assistantpro/mqtt/mqtt_server_class.dart';
-// import 'package:assistantpro/mqtt/mqtt_browser_class.dart';
 
 enum Language { english, arabic }
 
 enum InputType { email, phone }
+
+enum InputOperation { signIn, passwordReset }
 
 class AppInit {
   static bool showOnBoard = false;
@@ -30,7 +30,6 @@ class AppInit {
   static Transition transition = Transition.leftToRightWithFade;
   // ignore: prefer_typing_uninitialized_variables
   static late final mqttClient;
-
   static Future<void> initializeConstants() async {
     prefs = await SharedPreferences.getInstance();
     isLocaleSet = await getIfLocaleIsSet();
@@ -55,20 +54,20 @@ class AppInit {
     if (defaultTargetPlatform == TargetPlatform.iOS && !isWeb) {
       isIos = true;
     }
-    // if (AppInit.isWeb) {
-    //    mqttClient = MQTTClientBrowserWrapper();
-    //   await mqttClient.prepareMqttClient();
-    // } else {
-    //   mqttClient = MQTTClientServerWrapper();
-    //   await mqttClient.prepareMqttClient();
-    // }
+    if (AppInit.isWeb) {
+      // mqttClient = MQTTClientBrowserWrapper();
+      // await mqttClient.prepareMqttClient();
+    } else {
+      //mqttClient = MQTTClientServerWrapper();
+      // await mqttClient.prepareMqttClient();
+    }
   }
 
   static Future<void> initialize() async {
     if (!isInitialised) {
       await initializeFireBaseApp();
       if (kDebugMode) print('firebase app initialized');
-      /*   if (AppInit.isWeb || AppInit.webMobile) {
+      if (AppInit.isWeb || AppInit.webMobile) {
         await activateWebAppCheck();
         if (kDebugMode) print('web app check initialized');
       } else if (AppInit.isAndroid) {
@@ -78,7 +77,7 @@ class AppInit {
         await activateIosAppCheck();
         if (kDebugMode) print('ios app check initialized');
       }
-      if (kDebugMode) print('Firebase initialized');*/
+      if (kDebugMode) print('Firebase initialized');
       isInitialised = true;
       removeSplashScreen();
     }

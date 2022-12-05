@@ -7,7 +7,7 @@ import '../../../../constants/assets_strings.dart';
 import '../../controllers/otp_verification_controller.dart';
 import 'otp_verification.dart';
 
-void getToPhoneVerificationScreen() {
+void getToPhoneVerificationScreen({required InputOperation inputOperation}) {
   final controller = Get.put(OtpVerificationController());
   Get.to(
     () => SingleEntryScreen(
@@ -17,15 +17,27 @@ void getToPhoneVerificationScreen() {
       textFormTitle: 'phoneLabel'.tr,
       textFormHint: 'phoneFieldLabel'.tr,
       buttonTitle: 'continue'.tr,
-      onPressed: () => Get.to(
-          () => OTPVerificationScreen(
-                verificationType: 'phoneLabel'.tr,
-                lottieAssetAnim: kPhoneOTPAnim,
-                enteredString: '+2text',
-              ),
-          transition: AppInit.getPageTransition()),
-      inputType: InputType.phone,
       textController: controller.enteredData,
+      inputType: InputType.phone,
+      onPressed: () async {
+        var phoneNumber = controller.enteredData.value.text;
+        var returnMessage = '';
+        returnMessage =
+            await controller.signInWithOTPPhone(phoneNumber, inputOperation);
+        if (returnMessage.compareTo('codeSent') == 0) {
+          Get.to(
+              () => OTPVerificationScreen(
+                    inputType: InputType.phone,
+                    verificationType: 'phoneLabel'.tr,
+                    lottieAssetAnim: kPhoneOTPAnim,
+                    enteredString: phoneNumber,
+                    inputOperation: inputOperation,
+                  ),
+              transition: AppInit.getPageTransition());
+        } else {
+          Get.snackbar('Error', returnMessage);
+        }
+      },
     ),
     transition: AppInit.getPageTransition(),
   );

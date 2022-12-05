@@ -9,18 +9,18 @@ import '../constants/app_init_constants.dart';
 import '../constants/sizes.dart';
 
 class SingleEntryScreen extends StatelessWidget {
-  const SingleEntryScreen(
-      {Key? key,
-      required this.title,
-      required this.lottieAssetAnim,
-      required this.textFormTitle,
-      required this.textFormHint,
-      required this.buttonTitle,
-      required this.prefixIconData,
-      required this.onPressed,
-      required this.inputType,
-      required this.textController})
-      : super(key: key);
+  const SingleEntryScreen({
+    Key? key,
+    required this.title,
+    required this.lottieAssetAnim,
+    required this.textFormTitle,
+    required this.textFormHint,
+    required this.buttonTitle,
+    required this.prefixIconData,
+    required this.onPressed,
+    required this.textController,
+    required this.inputType,
+  }) : super(key: key);
   final String title;
   final String lottieAssetAnim;
   final String textFormTitle;
@@ -29,6 +29,7 @@ class SingleEntryScreen extends StatelessWidget {
   final IconData prefixIconData;
   final Function onPressed;
   final InputType inputType;
+
   final TextEditingController textController;
 
   @override
@@ -62,9 +63,7 @@ class SingleEntryScreen extends StatelessWidget {
               prefixIconData: prefixIconData,
               textController: textController,
             ),
-            const SizedBox(
-              height: 20.0,
-            ),
+            const SizedBox(height: 20.0),
             RegularElevatedButton(
                 buttonText: buttonTitle,
                 height: screenHeight,
