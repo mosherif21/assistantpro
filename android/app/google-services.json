@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "115591952018",
+    "firebase_url": "https://assistantpro-1-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "assistantpro-1",
+    "storage_bucket": "assistantpro-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115591952018:android:5e195f7c720ebefb45584b",
+        "android_client_info": {
+          "package_name": "com.example.assistantpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115591952018-55tds54bjplo4hdc4ocsea6j1em048td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1dRPqldlDXkxVfJz2pgACJYiFA4fXNlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115591952018-55tds54bjplo4hdc4ocsea6j1em048td.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
