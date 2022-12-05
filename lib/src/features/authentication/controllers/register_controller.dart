@@ -8,11 +8,12 @@ class RegisterController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   final passwordConfirm = TextEditingController();
-  void registerNewUser(String email, String password) {
+  RxString returnMessage = ''.obs;
+  Future<void> registerNewUser(String email, String password) async {
     if (kDebugMode) {
       print('email register data is: email: $email and password: $password');
     }
-    AuthenticationRepository.instance
+    returnMessage.value = await AuthenticationRepository.instance
         .createUserWithEmailAndPassword(email, password);
   }
 }

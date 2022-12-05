@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../../common_widgets/text_form_field.dart';
 import '../../../../common_widgets/text_form_field_passwords.dart';
+import '../../../../routing/loading_screen.dart';
 
 RxBool passwordHide = true.obs;
 RxBool confirmPasswordHide = true.obs;
@@ -39,21 +40,40 @@ class EmailRegisterForm extends StatelessWidget {
               textController: controller.passwordConfirm,
             ),
             const SizedBox(height: 6),
+            Obx(
+              () => controller.returnMessage.value.compareTo('success') != 0
+                  ? Text(
+                      controller.returnMessage.value,
+                      style: const TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
+            ),
+            const SizedBox(height: 6),
             RegularElevatedButton(
               buttonText: 'registerTextTitle'.tr,
               height: height,
-              onPressed: () {
+              onPressed: () async {
                 final email = controller.email.text;
                 final password = controller.password.text;
                 final passwordConfirm = controller.passwordConfirm.text;
-                if (
-                    //formKey.currentState!.validate() &&
-                    password.compareTo(passwordConfirm) == 0) {
-                  RegisterController.instance.registerNewUser(
+                showLoadingScreen();
+                if (password.compareTo(passwordConfirm) == 0 &&
+                    password.length > 8) {
+                  await RegisterController.instance.registerNewUser(
                     email,
                     password,
                   );
+                } else if (email.isEmpty ||
+                    password.isEmpty ||
+                    passwordConfirm.isEmpty) {
+                  controller.returnMessage.value = 'Fields can\'t be empty';
+                } else if (password.length < 8) {
+                  controller.returnMessage.value =
+                      'Password can\'t be less than 8 characters';
+                } else {
+                  controller.returnMessage.value = 'Passwords doesn\'t match';
                 }
+                hideLoadingScreen();
               },
             ),
           ],
