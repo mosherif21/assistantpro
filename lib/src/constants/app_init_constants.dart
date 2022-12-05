@@ -8,6 +8,8 @@ import '../../firebase/firebase_initializations.dart';
 import '../../localization/language/language_functions.dart';
 import '../features/onboarding/components/onboarding_shared_preferences.dart';
 import '../routing/splash_screen.dart';
+// import 'package:assistantpro/mqtt/mqtt_server_class.dart';
+// import 'package:assistantpro/mqtt/mqtt_browser_class.dart';
 
 enum Language { english, arabic }
 
@@ -26,6 +28,7 @@ class AppInit {
   static late final Locale setLocale;
   static Language currentDeviceLanguage = Language.english;
   static Transition transition = Transition.leftToRightWithFade;
+  static late final client;
 
   static Future<void> initializeConstants() async {
     prefs = await SharedPreferences.getInstance();
@@ -51,6 +54,13 @@ class AppInit {
     if (defaultTargetPlatform == TargetPlatform.iOS && !isWeb) {
       isIos = true;
     }
+    // if (AppInit.isWeb) {
+    //    client = MQTTClientBrowserWrapper();
+    //   await client.prepareMqttClient();
+    // } else {
+    //   client = MQTTClientServerWrapper();
+    //   await client.prepareMqttClient();
+    // }
   }
 
   static Future<void> initialize() async {
