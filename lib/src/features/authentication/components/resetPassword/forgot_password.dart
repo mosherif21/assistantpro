@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../common_widgets/framed_button.dart';
-import '../otpVerification/phone_verification_screen.dart';
 
 class ForgetPasswordLayout extends StatelessWidget {
   const ForgetPasswordLayout({Key? key}) : super(key: key);
@@ -31,17 +30,6 @@ class ForgetPasswordLayout extends StatelessWidget {
             onPressed: () {
               RegularBottomSheet.hideBottomSheet();
               const EmailResetScreen();
-            },
-          ),
-          SizedBox(height: screenHeight * 0.02),
-          FramedIconButton(
-            height: screenHeight * 0.12,
-            title: 'phoneLabel'.tr,
-            subTitle: 'numberReset'.tr,
-            iconData: Icons.mobile_friendly_rounded,
-            onPressed: () {
-              RegularBottomSheet.hideBottomSheet();
-              getToPhoneVerificationScreen();
             },
           ),
         ],

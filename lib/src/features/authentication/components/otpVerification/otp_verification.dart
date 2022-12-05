@@ -27,7 +27,6 @@ class OTPVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double? screenHeight = getScreenHeight(context);
-    //String verificationCode = '';
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -85,9 +84,6 @@ class OTPVerificationScreen extends StatelessWidget {
                   fontSize: 25.0,
                   fontWeight: FontWeight.w600),
               borderWidth: 4.0,
-              // onCodeChanged: (code) {
-              //   _confirmButtonEnable.value = false;
-              // },
               onSubmit: (enteredVerificationCode) async {
                 _confirmButtonEnable.value = true;
                 await OtpVerificationController.instance.verifyOTP(
@@ -96,35 +92,6 @@ class OTPVerificationScreen extends StatelessWidget {
                 );
               },
             ),
-            // const SizedBox(
-            //   height: 30.0,
-            // ),
-            // SizedBox(
-            //   width: double.infinity,
-            //   height: screenHeight * 0.05,
-            //   child: Obx(
-            //     () => ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //         elevation: 0,
-            //         backgroundColor: Colors.black,
-            //         foregroundColor: Colors.white,
-            //         shape: const RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.all(
-            //             Radius.circular(3),
-            //           ),
-            //         ),
-            //       ),
-            //       onPressed: _confirmButtonEnable.value
-            //           ? () async => verifyOTP()
-            //           : null,
-            //       child: Text(
-            //         'confirm'.tr,
-            //         style: const TextStyle(
-            //             color: Colors.white, fontWeight: FontWeight.w500),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

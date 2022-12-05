@@ -39,7 +39,7 @@ class Languages extends Translations {
           'arabic': 'العربية',
           'chooseLanguage': 'اختر لغتك المفضلة',
           'chooseForgetPasswordMethod': 'اختر طريقة تغيير كلمة المرور',
-          'emailReset': 'تغيير البريد الكترونى عن طريق كود بالبريد الكترونى',
+          'emailReset': 'تغيير كلمة المرور عن طريق لينك البريد الكترونى',
           'numberReset': 'تغيير البريد الكترونى عن طريق كود برقم الهاتف',
           'phoneLabel': 'رقم الهاتف',
           'phoneFieldLabel': 'ادخل رقم هاتفك',
@@ -89,7 +89,7 @@ class Languages extends Translations {
           'chooseLanguage': 'Choose your preferred language',
           'chooseForgetPasswordMethod':
               'Choose a method to reset your password',
-          'emailReset': 'Reset password via E-Mail Verification code',
+          'emailReset': 'Reset password via E-Mail Link',
           'numberReset': 'Reset password via Phone OTP Verification',
           'phoneLabel': 'Phone Number',
           'phoneFieldLabel': 'Enter your Phone Number',
