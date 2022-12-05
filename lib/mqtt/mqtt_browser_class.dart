@@ -26,7 +26,7 @@ class MQTTClientBrowserWrapper {
     _setupMqttClient();
     await _connectClient();
     if (client.connectionStatus?.state == MqttConnectionState.connected) {
-      _subscribeToTopic('networks');
+      // _subscribeToTopic('networks');
       // _publishMessage('Hello');
     } else {
       if (kDebugMode) print('client is not connected');

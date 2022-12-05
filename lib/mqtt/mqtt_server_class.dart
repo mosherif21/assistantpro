@@ -25,7 +25,7 @@ class MQTTClientServerWrapper {
   Future<void> prepareMqttClient() async {
     _setupMqttClient();
     await _connectClient();
-    _subscribeToTopic('networks');
+    //_subscribeToTopic('networks');
     // _publishMessage('Hello');
   }
 

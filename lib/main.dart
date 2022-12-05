@@ -1,4 +1,3 @@
-import 'package:assistantpro/mqtt/mqtt_browser_class.dart';
 import 'package:assistantpro/src/connectivity/connectivity_binding.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
@@ -11,17 +10,18 @@ import 'package:flutter_web_frame/flutter_web_frame.dart';
 import 'package:get/get.dart';
 
 import 'localization/language/localization_strings.dart';
-import 'mqtt/mqtt_server_class.dart';
+//import 'mqtt/mqtt_server_class.dart';
+//import 'package:assistantpro/mqtt/mqtt_browser_class.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await AppInit.initializeConstants();
   if (AppInit.isWeb) {
-    MQTTClientBrowserWrapper client = MQTTClientBrowserWrapper();
+    //MQTTClientBrowserWrapper client = MQTTClientBrowserWrapper();
     // await client.prepareMqttClient();
   } else {
-    MQTTClientServerWrapper client = MQTTClientServerWrapper();
+    // MQTTClientServerWrapper client = MQTTClientServerWrapper();
     // await client.prepareMqttClient();
   }
 
