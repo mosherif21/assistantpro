@@ -1,3 +1,4 @@
+import 'package:assistantpro/authentication/authentication_repository.dart';
 import 'package:assistantpro/src/connectivity/connectivity_binding.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
@@ -14,9 +15,8 @@ import 'localization/language/localization_strings.dart';
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
   await AppInit.initializeConstants();
-
+  Get.put(AuthenticationRepository());
   runApp(const MyApp());
 }
 

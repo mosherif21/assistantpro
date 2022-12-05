@@ -1,3 +1,4 @@
+import 'package:assistantpro/authentication/authentication_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -11,5 +12,7 @@ class RegisterController extends GetxController {
     if (kDebugMode) {
       print('email register data is: email: $email and password: $password');
     }
+    AuthenticationRepository.instance
+        .createUserWithEmailAndPassword(email, password);
   }
 }

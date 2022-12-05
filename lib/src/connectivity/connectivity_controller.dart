@@ -60,7 +60,7 @@ class ConnectivityController extends GetxController {
       title: 'noConnectionAlertTitle'.tr,
       content: Lottie.asset(
         kNoInternetAnim,
-        height: screenHeight! * 0.2,
+        height: screenHeight! * 0.25,
       ),
       dismissible: false,
     ).showNoButtonAlertDialog();
