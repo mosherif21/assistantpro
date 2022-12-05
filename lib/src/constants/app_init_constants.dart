@@ -28,7 +28,8 @@ class AppInit {
   static late final Locale setLocale;
   static Language currentDeviceLanguage = Language.english;
   static Transition transition = Transition.leftToRightWithFade;
-  static late final client;
+  // ignore: prefer_typing_uninitialized_variables
+  static late final mqttClient;
 
   static Future<void> initializeConstants() async {
     prefs = await SharedPreferences.getInstance();
@@ -55,11 +56,11 @@ class AppInit {
       isIos = true;
     }
     // if (AppInit.isWeb) {
-    //    client = MQTTClientBrowserWrapper();
-    //   await client.prepareMqttClient();
+    //    mqttClient = MQTTClientBrowserWrapper();
+    //   await mqttClient.prepareMqttClient();
     // } else {
-    //   client = MQTTClientServerWrapper();
-    //   await client.prepareMqttClient();
+    //   mqttClient = MQTTClientServerWrapper();
+    //   await mqttClient.prepareMqttClient();
     // }
   }
 
