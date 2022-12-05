@@ -47,33 +47,33 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDGkOoC0YCS7D3puztY3IB3m07MjDeSagw',
-    appId: '1:996996980213:web:bd49d528ddc9e13fccd4bc',
-    messagingSenderId: '996996980213',
-    projectId: 'ambulancebookingproject',
-    authDomain: 'ambulancebookingproject.firebaseapp.com',
-    databaseURL: 'https://ambulancebookingproject-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'ambulancebookingproject.appspot.com',
-    measurementId: 'G-NVVTM3NBB8',
+    apiKey: 'AIzaSyCTKWHIZnoh4LWSdjYE79WaJQyrEV25GMk',
+    appId: '1:115591952018:web:04e8f6511f76c6e045584b',
+    messagingSenderId: '115591952018',
+    projectId: 'assistantpro-1',
+    authDomain: 'assistantpro-1.firebaseapp.com',
+    databaseURL: 'https://assistantpro-1-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'assistantpro-1.appspot.com',
+    measurementId: 'G-R8RKZYDD3D',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBi-fxxPyiLrpS3NexPCz9NijtQNAhk5VQ',
-    appId: '1:996996980213:android:98ccd200e5bcad93ccd4bc',
-    messagingSenderId: '996996980213',
-    projectId: 'ambulancebookingproject',
-    databaseURL: 'https://ambulancebookingproject-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'ambulancebookingproject.appspot.com',
+    apiKey: 'AIzaSyC1dRPqldlDXkxVfJz2pgACJYiFA4fXNlg',
+    appId: '1:115591952018:android:5e195f7c720ebefb45584b',
+    messagingSenderId: '115591952018',
+    projectId: 'assistantpro-1',
+    databaseURL: 'https://assistantpro-1-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'assistantpro-1.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAJ5591rEa718a0_Ffi7uylBeGQ3k93Fvc',
-    appId: '1:996996980213:ios:9207b1d25ddffd64ccd4bc',
-    messagingSenderId: '996996980213',
-    projectId: 'ambulancebookingproject',
-    databaseURL: 'https://ambulancebookingproject-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'ambulancebookingproject.appspot.com',
-    iosClientId: '996996980213-8172m7d35r17qd730cjk6skirr4alsrf.apps.googleusercontent.com',
-    iosBundleId: 'com.goambulance.goambulance',
+    apiKey: 'AIzaSyBz594P_egE0J9sPgQyrPhZDJUalwIEHJ0',
+    appId: '1:115591952018:ios:518476d9bd3a46cd45584b',
+    messagingSenderId: '115591952018',
+    projectId: 'assistantpro-1',
+    databaseURL: 'https://assistantpro-1-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'assistantpro-1.appspot.com',
+    iosClientId: '115591952018-33hqh2kqtp1bbbc1qhgptfst5325er4s.apps.googleusercontent.com',
+    iosBundleId: 'com.example.assistantpro',
   );
 }
