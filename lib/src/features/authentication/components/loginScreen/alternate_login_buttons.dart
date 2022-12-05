@@ -4,6 +4,7 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:get/get.dart';
 
+import '../../../../error_widgets/not_available_error_widget.dart';
 import '../otpVerification/phone_verification_screen.dart';
 
 class AlternateLoginButtons extends StatelessWidget {
@@ -30,18 +31,20 @@ class AlternateLoginButtons extends StatelessWidget {
           width: buttonsWidth,
         ),
         SizedBox(height: buttonSpacing),
-        SignInButton(
-          Buttons.GoogleDark,
-          text: 'loginWithGoogle'.tr,
-          onPressed: () {},
-          height: buttonsHeight,
-          width: buttonsWidth,
-        ),
+        AppInit.isIos
+            ? const SizedBox()
+            : SignInButton(
+                Buttons.GoogleDark,
+                text: 'loginWithGoogle'.tr,
+                onPressed: () {},
+                height: buttonsHeight,
+                width: buttonsWidth,
+              ),
         SizedBox(height: buttonSpacing),
         SignInButton(
           Buttons.Facebook,
           text: 'loginWithFacebook'.tr,
-          onPressed: () {},
+          onPressed: () => Get.offAll(() => const NotAvailableErrorWidget()),
           height: buttonsHeight,
           width: buttonsWidth,
         ),
