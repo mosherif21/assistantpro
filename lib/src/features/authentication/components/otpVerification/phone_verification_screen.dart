@@ -1,3 +1,4 @@
+import 'package:assistantpro/src/routing/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +8,7 @@ import '../../../../constants/assets_strings.dart';
 import '../../controllers/otp_verification_controller.dart';
 import 'otp_verification.dart';
 
-void getToPhoneVerificationScreen({required InputOperation inputOperation}) {
+void getToPhoneVerificationScreen() {
   final controller = Get.put(OtpVerificationController());
   Get.to(
     () => SingleEntryScreen(
@@ -20,10 +21,11 @@ void getToPhoneVerificationScreen({required InputOperation inputOperation}) {
       textController: controller.enteredData,
       inputType: InputType.phone,
       onPressed: () async {
-        var phoneNumber = controller.enteredData.value.text;
+        showLoadingScreen();
+        var phoneNumber = controller.enteredData.value.text.trim();
         var returnMessage = '';
-        returnMessage =
-            await controller.signInWithOTPPhone(phoneNumber, inputOperation);
+        returnMessage = await controller.signInWithOTPPhone(phoneNumber);
+        hideLoadingScreen();
         if (returnMessage.compareTo('codeSent') == 0) {
           Get.to(
               () => OTPVerificationScreen(
@@ -31,11 +33,12 @@ void getToPhoneVerificationScreen({required InputOperation inputOperation}) {
                     verificationType: 'phoneLabel'.tr,
                     lottieAssetAnim: kPhoneOTPAnim,
                     enteredString: phoneNumber,
-                    inputOperation: inputOperation,
                   ),
               transition: AppInit.getPageTransition());
         } else {
-          Get.snackbar('Error', returnMessage);
+          Get.snackbar('Invalid Number', returnMessage,
+              snackPosition: SnackPosition.BOTTOM,
+              margin: const EdgeInsets.all(20.0));
         }
       },
     ),

@@ -1,5 +1,3 @@
-import 'package:assistantpro/src/constants/app_init_constants.dart';
-import 'package:assistantpro/src/features/authentication/components/resetPassword/make_new_password_screen.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
 import 'package:assistantpro/src/features/home_page/screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,16 +53,13 @@ class AuthenticationRepository extends GetxController {
     return 'default/failed';
   }
 
-  Future<String> signInWithPhoneNumber(
-      String phoneNumber, InputOperation inputOperation) async {
+  Future<String> signInWithPhoneNumber(String phoneNumber) async {
     String returnMessage = 'codeSent';
     await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (credential) async {
           await _auth.signInWithCredential(credential);
-          inputOperation == InputOperation.signIn
-              ? Get.offAll(() => const HomePage())
-              : Get.offAll(() => const EnterNewPasswordScreen());
+          Get.offAll(() => const HomePage());
         },
         verificationFailed: (e) {
           if (e.code.compareTo('invalid-phone-number') == 0) {
@@ -81,10 +76,19 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<String> verifyOTP(String otp) async {
-    var credentials = await _auth.signInWithCredential(
-        PhoneAuthProvider.credential(
-            verificationId: verificationId.value, smsCode: otp));
-    return credentials.user != null ? 'success' : 'Entered OTP is incorrect';
+    UserCredential credentials;
+    try {
+      credentials = await _auth.signInWithCredential(
+          PhoneAuthProvider.credential(
+              verificationId: verificationId.value, smsCode: otp));
+      if (credentials.user != null) return 'success';
+    } on FirebaseAuthException catch (e) {
+      if (e.code.compareTo('invalid-verification-code') == 0) {
+        return 'Entered OTP is wrong';
+      }
+    } catch (_) {}
+
+    return 'Unknown error occurred';
   }
 
   Future<void> signInWithGoogle(String email, String password) async {}

@@ -12,19 +12,17 @@ import '../../../../constants/app_init_constants.dart';
 final RxBool _confirmButtonEnable = false.obs;
 
 class OTPVerificationScreen extends StatelessWidget {
-  const OTPVerificationScreen(
-      {Key? key,
-      required this.verificationType,
-      required this.lottieAssetAnim,
-      required this.enteredString,
-      required this.inputType,
-      required this.inputOperation})
-      : super(key: key);
+  const OTPVerificationScreen({
+    Key? key,
+    required this.verificationType,
+    required this.lottieAssetAnim,
+    required this.enteredString,
+    required this.inputType,
+  }) : super(key: key);
   final String verificationType;
   final String lottieAssetAnim;
   final String enteredString;
   final InputType inputType;
-  final InputOperation inputOperation;
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +91,9 @@ class OTPVerificationScreen extends StatelessWidget {
               onSubmit: (enteredVerificationCode) async {
                 _confirmButtonEnable.value = true;
                 await OtpVerificationController.instance.verifyOTP(
-                    verificationCode: enteredVerificationCode,
-                    inputType: inputType,
-                    inputOperation: inputOperation);
+                  verificationCode: enteredVerificationCode,
+                  inputType: inputType,
+                );
               },
             ),
             // const SizedBox(

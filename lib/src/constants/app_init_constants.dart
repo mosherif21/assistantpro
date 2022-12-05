@@ -13,8 +13,6 @@ enum Language { english, arabic }
 
 enum InputType { email, phone }
 
-enum InputOperation { signIn, passwordReset }
-
 class AppInit {
   static bool showOnBoard = false;
   static bool notWebMobile = false;
