@@ -11,6 +11,7 @@ class LoginController extends GetxController {
   final password = TextEditingController();
   RxString returnMessage = ''.obs;
   Future<void> loginUser(String email, String password) async {
+    FocusManager.instance.primaryFocus?.unfocus();
     showLoadingScreen();
     if (email.isEmail && password.length >= 8) {
       returnMessage.value = await AuthenticationRepository.instance

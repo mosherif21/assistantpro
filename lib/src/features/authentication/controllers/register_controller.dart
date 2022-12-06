@@ -17,6 +17,7 @@ class RegisterController extends GetxController {
     if (kDebugMode) {
       print('email register data is: email: $email and password: $password');
     }
+    FocusManager.instance.primaryFocus?.unfocus();
     showLoadingScreen();
     if (password.compareTo(passwordConfirm) == 0 && password.length >= 8) {
       returnMessage.value = await AuthenticationRepository.instance

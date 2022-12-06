@@ -13,6 +13,7 @@ class ResetController extends GetxController {
     if (kDebugMode) {
       print('email reset data is: $email');
     }
+    FocusManager.instance.primaryFocus?.unfocus();
     showLoadingScreen();
     var returnMessage =
         await AuthenticationRepository.instance.resetPassword(email: email);

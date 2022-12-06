@@ -11,6 +11,7 @@ class OtpVerificationController extends GetxController {
   final enteredData = TextEditingController();
 
   Future<String> signInWithOTPPhone(String phoneNumber) async {
+    FocusManager.instance.primaryFocus?.unfocus();
     showLoadingScreen();
     String returnMessage;
     if (phoneNumber.length == 13 && phoneNumber.isPhoneNumber) {
