@@ -36,7 +36,7 @@ void getToPhoneVerificationScreen() {
                   ),
               transition: AppInit.getPageTransition());
         } else {
-          Get.snackbar('invalidPhoneNumber'.tr, returnMessage,
+          Get.snackbar('error'.tr, returnMessage,
               snackPosition: SnackPosition.BOTTOM,
               margin: const EdgeInsets.all(20.0));
         }
