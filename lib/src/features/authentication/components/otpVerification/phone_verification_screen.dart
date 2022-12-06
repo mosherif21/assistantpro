@@ -1,4 +1,3 @@
-import 'package:assistantpro/src/routing/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,11 +20,9 @@ void getToPhoneVerificationScreen() {
       textController: controller.enteredData,
       inputType: InputType.phone,
       onPressed: () async {
-        showLoadingScreen();
         var phoneNumber = controller.enteredData.value.text;
         var returnMessage = '';
         returnMessage = await controller.signInWithOTPPhone(phoneNumber);
-        hideLoadingScreen();
         if (returnMessage.compareTo('codeSent') == 0) {
           Get.to(
               () => OTPVerificationScreen(

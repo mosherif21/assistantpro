@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../../../authentication/authentication_repository.dart';
+import '../../../routing/loading_screen.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
@@ -10,6 +11,7 @@ class LoginController extends GetxController {
   final password = TextEditingController();
   RxString returnMessage = ''.obs;
   Future<void> loginUser(String email, String password) async {
+    showLoadingScreen();
     if (email.isEmail && password.length >= 8) {
       returnMessage.value = await AuthenticationRepository.instance
           .signInWithEmailAndPassword(email, password);
@@ -20,6 +22,7 @@ class LoginController extends GetxController {
     } else {
       returnMessage.value = 'invalidEmailEntered'.tr;
     }
+    hideLoadingScreen();
     if (kDebugMode) {
       print('login data is: email: $email and password: $password');
       print(returnMessage.value);

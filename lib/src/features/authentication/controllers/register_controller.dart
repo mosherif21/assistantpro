@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../../routing/loading_screen.dart';
+
 class RegisterController extends GetxController {
   static RegisterController get instance => Get.find();
   final email = TextEditingController();
@@ -15,6 +17,7 @@ class RegisterController extends GetxController {
     if (kDebugMode) {
       print('email register data is: email: $email and password: $password');
     }
+    showLoadingScreen();
     if (password.compareTo(passwordConfirm) == 0 && password.length >= 8) {
       returnMessage.value = await AuthenticationRepository.instance
           .createUserWithEmailAndPassword(email, password);
@@ -25,5 +28,6 @@ class RegisterController extends GetxController {
     } else {
       returnMessage.value = 'passwordNotMatch'.tr;
     }
+    hideLoadingScreen();
   }
 }

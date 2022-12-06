@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../../routing/loading_screen.dart';
+
 class ResetController extends GetxController {
   static ResetController get instance => Get.find();
   final emailController = TextEditingController();
@@ -11,6 +13,10 @@ class ResetController extends GetxController {
     if (kDebugMode) {
       print('email reset data is: $email');
     }
-    return await AuthenticationRepository.instance.resetPassword(email: email);
+    showLoadingScreen();
+    var returnMessage =
+        await AuthenticationRepository.instance.resetPassword(email: email);
+    hideLoadingScreen();
+    return returnMessage;
   }
 }

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 
 import '../../../../common_widgets/text_form_field.dart';
 import '../../../../common_widgets/text_form_field_passwords.dart';
-import '../../../../routing/loading_screen.dart';
 
 RxBool passwordHide = true.obs;
 RxBool confirmPasswordHide = true.obs;
@@ -56,13 +55,11 @@ class EmailRegisterForm extends StatelessWidget {
               height: height,
               enabled: true,
               onPressed: () async {
-                showLoadingScreen();
-                await RegisterController.instance.registerNewUser(
+                await controller.registerNewUser(
                   controller.email.text,
                   controller.password.text,
                   controller.passwordConfirm.text,
                 );
-                hideLoadingScreen();
               },
             ),
           ],

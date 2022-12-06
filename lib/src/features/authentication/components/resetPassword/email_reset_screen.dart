@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../../common_widgets/single_entry_screen.dart';
 import '../../../../constants/app_init_constants.dart';
-import '../../../../routing/loading_screen.dart';
 import '../../controllers/reset_password_controller.dart';
 
 void getToResetPasswordScreen() {
@@ -22,9 +21,8 @@ void getToResetPasswordScreen() {
       onPressed: () async {
         String returnMessage = '';
         String email = controller.emailController.value.text.trim();
-        showLoadingScreen();
+
         returnMessage = await controller.resetPassword(email);
-        hideLoadingScreen();
         if (returnMessage.compareTo('emailSent') == 0) {
           Get.back();
           Get.snackbar('success'.tr, 'emailResetSuccess'.tr,

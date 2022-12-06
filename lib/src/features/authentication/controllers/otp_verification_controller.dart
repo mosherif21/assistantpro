@@ -11,9 +11,16 @@ class OtpVerificationController extends GetxController {
   final enteredData = TextEditingController();
 
   Future<String> signInWithOTPPhone(String phoneNumber) async {
+    showLoadingScreen();
     String returnMessage;
-    returnMessage = await AuthenticationRepository.instance
-        .signInWithPhoneNumber(phoneNumber);
+    if (phoneNumber.length == 13 && phoneNumber.isPhoneNumber) {
+      returnMessage = await AuthenticationRepository.instance
+          .signInWithPhoneNumber(phoneNumber);
+    } else {
+      returnMessage = 'invalidPhoneNumber'.tr;
+    }
+    hideLoadingScreen();
+
     return returnMessage;
   }
 
@@ -33,10 +40,8 @@ class OtpVerificationController extends GetxController {
   }) async {
     showLoadingScreen();
     var returnMessage = inputType == InputType.phone
-        ? await OtpVerificationController.instance
-            .verifyOTPPhone(verificationCode)
-        : await OtpVerificationController.instance
-            .verifyOTPEmail(verificationCode);
+        ? await verifyOTPPhone(verificationCode)
+        : await verifyOTPEmail(verificationCode);
     hideLoadingScreen();
     if (returnMessage.compareTo('success') == 0) {
       Get.offAll(() => const HomePage());

@@ -17,7 +17,7 @@ class AuthenticationRepository extends GetxController {
   late final Rx<User?> fireUser;
   bool isUserLoggedIn = false;
   var verificationId = ''.obs;
-  late GoogleSignIn googleSignIn;
+  GoogleSignIn? googleSignIn;
   @override
   void onReady() {
     fireUser = Rx<User?>(_auth.currentUser);
@@ -58,23 +58,28 @@ class AuthenticationRepository extends GetxController {
 
   Future<String> signInWithPhoneNumber(String phoneNumber) async {
     String returnMessage = 'codeSent';
-    await _auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        verificationCompleted: (credential) async {
-          await _auth.signInWithCredential(credential);
-          Get.offAll(() => const HomePage());
-        },
-        verificationFailed: (e) {
-          if (e.code.compareTo('invalid-phone-number') == 0) {
-            returnMessage = 'invalidPhoneNumber'.tr;
-          }
-        },
-        codeSent: (verificationId, resendToken) {
-          this.verificationId.value = verificationId;
-        },
-        codeAutoRetrievalTimeout: (verificationId) {
-          this.verificationId.value = verificationId;
-        });
+    try {
+      await _auth.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: (credential) async {
+            await _auth.signInWithCredential(credential);
+            Get.offAll(() => const HomePage());
+          },
+          verificationFailed: (e) {
+            returnMessage = e.code;
+          },
+          codeSent: (verificationId, resendToken) {
+            this.verificationId.value = verificationId;
+          },
+          codeAutoRetrievalTimeout: (verificationId) {
+            this.verificationId.value = verificationId;
+          });
+    } on FirebaseAuthException catch (e) {
+      returnMessage = e.code;
+    } catch (e) {
+      returnMessage = e.toString();
+    }
+
     return returnMessage;
   }
 
@@ -101,7 +106,7 @@ class AuthenticationRepository extends GetxController {
               clientId:
                   '115591952018-55tds54bjplo4hdc4ocsea6j1em048td.apps.googleusercontent.com')
           : GoogleSignIn();
-      final googleSignInAccount = await googleSignIn.signIn();
+      final googleSignInAccount = await googleSignIn?.signIn();
       if (googleSignInAccount != null) {
         GoogleSignInAuthentication? signInAuthentication =
             await googleSignInAccount.authentication;
@@ -139,7 +144,7 @@ class AuthenticationRepository extends GetxController {
 
   Future<void> logoutUser() async {
     await _auth.signOut();
-    await googleSignIn.signOut();
+    await googleSignIn?.signOut();
     Get.offAll(() => const LoginScreen());
   }
 }

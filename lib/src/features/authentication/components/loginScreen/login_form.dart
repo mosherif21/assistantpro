@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import '../../../../common_widgets/regular_bottom_sheet.dart';
 import '../../../../common_widgets/regular_elevated_button.dart';
 import '../../../../common_widgets/text_form_field.dart';
-import '../../../../routing/loading_screen.dart';
 import '../resetPassword/forgot_password.dart';
 
 class LoginForm extends StatelessWidget {
@@ -65,10 +64,8 @@ class LoginForm extends StatelessWidget {
               buttonText: 'loginTextTitle'.tr,
               height: height,
               onPressed: () async {
-                showLoadingScreen();
                 await controller.loginUser(
                     controller.email.text, controller.password.text);
-                hideLoadingScreen();
               },
             ),
           ],

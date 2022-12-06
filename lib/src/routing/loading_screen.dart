@@ -27,5 +27,5 @@ void showLoadingScreen() {
 }
 
 void hideLoadingScreen() {
-  if (Get.isDialogOpen == true) Get.back();
+  Get.back();
 }

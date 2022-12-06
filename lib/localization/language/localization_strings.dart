@@ -138,7 +138,7 @@ class Languages extends Translations {
           'failedGoogleAuth': 'Google authentication failed. Please try again',
           'failedAuth': 'Authentication failed',
           'success': 'Success',
-          'error': 'error',
+          'error': 'Error',
           'emailResetSuccess': 'Reset email sent successfully',
           'emptyFields': 'Fields can\'t be empty',
           'smallPass': 'Password can\'t be less than 8 characters',
