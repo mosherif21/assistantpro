@@ -54,6 +54,7 @@ class EmailRegisterForm extends StatelessWidget {
             RegularElevatedButton(
               buttonText: 'registerTextTitle'.tr,
               height: height,
+              enabled: true,
               onPressed: () async {
                 showLoadingScreen();
                 await RegisterController.instance.registerNewUser(

@@ -36,7 +36,6 @@ class SingleEntryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenHeight = getScreenHeight(context);
-
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(kDefaultPaddingSize),
@@ -68,8 +67,9 @@ class SingleEntryScreen extends StatelessWidget {
                       ),
                     ),
                     initialCountryCode: 'EG',
-                    onChanged: (phone) =>
-                        textController.text = phone.completeNumber,
+                    onChanged: (phone) {
+                      textController.text = phone.completeNumber;
+                    },
                   )
                 : TextFormFieldRegular(
                     labelText: textFormTitle,
@@ -81,6 +81,7 @@ class SingleEntryScreen extends StatelessWidget {
             RegularElevatedButton(
                 buttonText: buttonTitle,
                 height: screenHeight,
+                enabled: true,
                 onPressed: onPressed),
           ],
         ),

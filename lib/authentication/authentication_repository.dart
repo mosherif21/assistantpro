@@ -4,6 +4,7 @@ import 'package:assistantpro/src/features/home_page/screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'exception_errors/signin_email_password_exceptions.dart';
 import 'exception_errors/signup_email_password_exceptions.dart';
@@ -16,6 +17,7 @@ class AuthenticationRepository extends GetxController {
   late final Rx<User?> fireUser;
   bool isUserLoggedIn = false;
   var verificationId = ''.obs;
+  late GoogleSignIn googleSignIn;
   @override
   void onReady() {
     fireUser = Rx<User?>(_auth.currentUser);
@@ -93,15 +95,27 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<String> signInWithGoogle() async {
-    User? user;
-    final GoogleAuthProvider authProvider = GoogleAuthProvider();
     try {
-      final UserCredential userCredential =
-          await _auth.signInWithPopup(authProvider);
-      user = userCredential.user;
-      if (user != null) {
-        Get.offAll(() => const LoginScreen());
-        return 'success';
+      googleSignIn = kIsWeb
+          ? GoogleSignIn(
+              clientId:
+                  '115591952018-55tds54bjplo4hdc4ocsea6j1em048td.apps.googleusercontent.com')
+          : GoogleSignIn();
+      final googleSignInAccount = await googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        GoogleSignInAuthentication? signInAuthentication =
+            await googleSignInAccount.authentication;
+
+        AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: signInAuthentication.idToken,
+          accessToken: signInAuthentication.accessToken,
+        );
+        UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        if (userCredential.user != null) {
+          Get.offAll(() => const HomePage());
+          return 'success';
+        }
       }
     } catch (e) {
       if (kDebugMode) e.printError();
@@ -125,6 +139,7 @@ class AuthenticationRepository extends GetxController {
 
   Future<void> logoutUser() async {
     await _auth.signOut();
+    await googleSignIn.signOut();
     Get.offAll(() => const LoginScreen());
   }
 }

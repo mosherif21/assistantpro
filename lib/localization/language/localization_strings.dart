@@ -63,7 +63,7 @@ class Languages extends Translations {
           'operationNotAllowed': 'محاولة غير مسموح بها',
           'userDisabled': 'هذا المستخدم ممنوع من الاستخدام',
           'invalidPhoneNumber': 'رقم الهاتف غير صحيح',
-          'wrongOTP': 'رقم الهاتف غير صحيح',
+          'wrongOTP': 'رمز التاكيد غير صحيح',
           'failedGoogleAuth': 'تسجيل الدخول بجوجل فشل',
           'failedAuth': 'فشل تسجيل الدخول',
           'success': 'محاولة ناجحة',

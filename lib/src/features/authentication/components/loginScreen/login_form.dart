@@ -61,6 +61,7 @@ class LoginForm extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             RegularElevatedButton(
+              enabled: true,
               buttonText: 'loginTextTitle'.tr,
               height: height,
               onPressed: () async {

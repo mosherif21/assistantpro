@@ -7,10 +7,12 @@ void showLoadingScreen() {
   final height = Get.context?.height;
 
   Get.dialog(
-      AlertDialog(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        content: SizedBox(
+    AlertDialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      content: WillPopScope(
+        onWillPop: () async => false,
+        child: SizedBox(
           height: AppInit.notWebMobile ? 812.0 : double.infinity,
           width: AppInit.notWebMobile ? 500.0 : double.infinity,
           child: LoadingAnimationWidget.inkDrop(
@@ -19,7 +21,9 @@ void showLoadingScreen() {
           ),
         ),
       ),
-      barrierDismissible: false);
+    ),
+    barrierDismissible: false,
+  );
 }
 
 void hideLoadingScreen() {
