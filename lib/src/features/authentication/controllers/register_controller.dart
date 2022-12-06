@@ -19,11 +19,11 @@ class RegisterController extends GetxController {
       returnMessage.value = await AuthenticationRepository.instance
           .createUserWithEmailAndPassword(email, password);
     } else if (email.isEmpty || password.isEmpty || passwordConfirm.isEmpty) {
-      returnMessage.value = 'Fields can\'t be empty';
+      returnMessage.value = 'emptyFields'.tr;
     } else if (password.length < 8) {
-      returnMessage.value = 'Password can\'t be less than 8 characters';
+      returnMessage.value = 'smallPass'.tr;
     } else {
-      returnMessage.value = 'Passwords doesn\'t match';
+      returnMessage.value = 'passwordNotMatch'.tr;
     }
   }
 }

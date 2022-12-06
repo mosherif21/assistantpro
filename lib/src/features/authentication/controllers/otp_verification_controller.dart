@@ -42,7 +42,7 @@ class OtpVerificationController extends GetxController {
       Get.offAll(() => const HomePage());
     } else {
       Get.snackbar(
-        'Wrong OTP',
+        'wrongOTP'.tr,
         returnMessage,
         snackPosition: SnackPosition.BOTTOM,
         margin: const EdgeInsets.all(20.0),

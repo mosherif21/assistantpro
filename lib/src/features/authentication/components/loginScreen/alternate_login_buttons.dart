@@ -44,7 +44,7 @@ class AlternateLoginButtons extends StatelessWidget {
                       .signInWithGoogle();
                   hideLoadingScreen();
                   if (returnMessage.compareTo('success') != 0) {
-                    Get.snackbar('Google Authentication failed', returnMessage,
+                    Get.snackbar('failedGoogleAuth'.tr, returnMessage,
                         snackPosition: SnackPosition.BOTTOM,
                         margin: const EdgeInsets.all(20.0));
                   }

@@ -23,7 +23,6 @@ void getToPhoneVerificationScreen() {
       onPressed: () async {
         showLoadingScreen();
         var phoneNumber = controller.enteredData.value.text;
-        print(phoneNumber);
         var returnMessage = '';
         returnMessage = await controller.signInWithOTPPhone(phoneNumber);
         hideLoadingScreen();
@@ -37,7 +36,7 @@ void getToPhoneVerificationScreen() {
                   ),
               transition: AppInit.getPageTransition());
         } else {
-          Get.snackbar('Invalid Number', returnMessage,
+          Get.snackbar('invalidPhoneNumber'.tr, returnMessage,
               snackPosition: SnackPosition.BOTTOM,
               margin: const EdgeInsets.all(20.0));
         }

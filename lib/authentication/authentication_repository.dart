@@ -1,3 +1,4 @@
+import 'package:assistantpro/authentication/exception_errors/password_reset_exceptions.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
 import 'package:assistantpro/src/features/home_page/screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,7 +64,7 @@ class AuthenticationRepository extends GetxController {
         },
         verificationFailed: (e) {
           if (e.code.compareTo('invalid-phone-number') == 0) {
-            returnMessage = 'Phone number is not valid';
+            returnMessage = 'invalidPhoneNumber'.tr;
           }
         },
         codeSent: (verificationId, resendToken) {
@@ -84,11 +85,11 @@ class AuthenticationRepository extends GetxController {
       if (credentials.user != null) return 'success';
     } on FirebaseAuthException catch (e) {
       if (e.code.compareTo('invalid-verification-code') == 0) {
-        return 'Entered OTP is wrong';
+        return 'wrongOTP'.tr;
       }
     } catch (_) {}
 
-    return 'Unknown error occurred';
+    return 'unknownError'.tr;
   }
 
   Future<String> signInWithGoogle() async {
@@ -105,7 +106,21 @@ class AuthenticationRepository extends GetxController {
     } catch (e) {
       if (kDebugMode) e.printError();
     }
-    return 'Google authentication failed';
+    return 'failedGoogleAuth'.tr;
+  }
+
+  Future<String> resetPassword({required String email}) async {
+    String returnMessage = 'unknownError'.tr;
+    try {
+      await _auth
+          .sendPasswordResetEmail(email: email)
+          .then((value) => returnMessage = 'emailSent');
+    } on FirebaseAuthException catch (e) {
+      final ex = ResetPasswordFailure.code(e.code);
+      if (kDebugMode) print('FIREBASE AUTH EXCEPTION : ${ex.errorMessage}');
+      return ex.errorMessage;
+    } catch (_) {}
+    return returnMessage;
   }
 
   Future<void> logoutUser() async {

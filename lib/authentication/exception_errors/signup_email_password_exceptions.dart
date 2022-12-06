@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class SignUpWithEmailAndPasswordFailure {
   final String errorMessage;
   const SignUpWithEmailAndPasswordFailure(
@@ -5,20 +7,15 @@ class SignUpWithEmailAndPasswordFailure {
   factory SignUpWithEmailAndPasswordFailure.code(String code) {
     switch (code) {
       case 'weak-password':
-        return const SignUpWithEmailAndPasswordFailure(
-            'Please enter a stronger password');
+        return SignUpWithEmailAndPasswordFailure('enterStrongerPassword'.tr);
       case 'invalid-email':
-        return const SignUpWithEmailAndPasswordFailure(
-            'Email is not valid or not in a correct format');
+        return SignUpWithEmailAndPasswordFailure('invalidEmailEntered'.tr);
       case 'email-already-in-use':
-        return const SignUpWithEmailAndPasswordFailure(
-            'An account already exists for that email');
+        return SignUpWithEmailAndPasswordFailure('emailAlreadyExists'.tr);
       case 'operation-not-allowed':
-        return const SignUpWithEmailAndPasswordFailure(
-            'Operation is not allowed. Please contact support');
+        return SignUpWithEmailAndPasswordFailure('operationNotAllowed'.tr);
       case 'user-disabled':
-        return const SignUpWithEmailAndPasswordFailure(
-            'This user has been disabled. Please contact support for help');
+        return SignUpWithEmailAndPasswordFailure('userDisabled'.tr);
       default:
         return const SignUpWithEmailAndPasswordFailure('');
     }

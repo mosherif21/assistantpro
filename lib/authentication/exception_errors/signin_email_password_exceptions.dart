@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class SignInWithEmailAndPasswordFailure {
   final String errorMessage;
   const SignInWithEmailAndPasswordFailure(
@@ -5,11 +7,9 @@ class SignInWithEmailAndPasswordFailure {
   factory SignInWithEmailAndPasswordFailure.code(String code) {
     switch (code) {
       case 'user-not-found':
-        return const SignInWithEmailAndPasswordFailure(
-            'There is no user with this email');
+        return SignInWithEmailAndPasswordFailure('noRegisteredEmail'.tr);
       case 'wrong-password':
-        return const SignInWithEmailAndPasswordFailure(
-            'Password entered is incorrect');
+        return SignInWithEmailAndPasswordFailure('wrongPassword'.tr);
       default:
         return const SignInWithEmailAndPasswordFailure('');
     }

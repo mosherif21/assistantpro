@@ -29,7 +29,7 @@ class ForgetPasswordLayout extends StatelessWidget {
             iconData: Icons.mail_outline_rounded,
             onPressed: () {
               RegularBottomSheet.hideBottomSheet();
-              const EmailResetScreen();
+              getToResetPasswordScreen();
             },
           ),
         ],

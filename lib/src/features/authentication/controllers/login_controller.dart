@@ -14,11 +14,11 @@ class LoginController extends GetxController {
       returnMessage.value = await AuthenticationRepository.instance
           .signInWithEmailAndPassword(email, password);
     } else if (email.isEmpty || password.isEmpty) {
-      returnMessage.value = 'Fields can\'t be empty';
+      returnMessage.value = 'emptyFields'.tr;
     } else if (password.length < 8) {
-      returnMessage.value = 'Password can\'t be less than 8 characters';
+      returnMessage.value = 'smallPass'.tr;
     } else {
-      returnMessage.value = 'Email  is not in a correct format';
+      returnMessage.value = 'invalidEmailEntered'.tr;
     }
     if (kDebugMode) {
       print('login data is: email: $email and password: $password');
