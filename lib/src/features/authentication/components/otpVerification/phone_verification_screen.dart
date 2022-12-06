@@ -13,7 +13,7 @@ void getToPhoneVerificationScreen() {
   Get.to(
     () => SingleEntryScreen(
       title: 'phoneVerification'.tr,
-      prefixIconData: Icons.email_outlined,
+      prefixIconData: Icons.phone,
       lottieAssetAnim: kPhoneVerificationAnim,
       textFormTitle: 'phoneLabel'.tr,
       textFormHint: 'phoneFieldLabel'.tr,
@@ -22,7 +22,8 @@ void getToPhoneVerificationScreen() {
       inputType: InputType.phone,
       onPressed: () async {
         showLoadingScreen();
-        var phoneNumber = controller.enteredData.value.text.trim();
+        var phoneNumber = controller.enteredData.value.text;
+        print(phoneNumber);
         var returnMessage = '';
         returnMessage = await controller.signInWithOTPPhone(phoneNumber);
         hideLoadingScreen();

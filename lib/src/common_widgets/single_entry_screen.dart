@@ -3,6 +3,7 @@ import 'package:assistantpro/src/common_widgets/text_form_field.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:lottie/lottie.dart';
 
 import '../constants/app_init_constants.dart';
@@ -57,12 +58,25 @@ class SingleEntryScreen extends StatelessWidget {
             const SizedBox(
               height: 20.0,
             ),
-            TextFormFieldRegular(
-              labelText: textFormTitle,
-              hintText: textFormHint,
-              prefixIconData: prefixIconData,
-              textController: textController,
-            ),
+            inputType == InputType.phone
+                ? IntlPhoneField(
+                    decoration: InputDecoration(
+                      labelText: textFormTitle,
+                      hintText: textFormHint,
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(),
+                      ),
+                    ),
+                    initialCountryCode: 'EG',
+                    onChanged: (phone) =>
+                        textController.text = phone.completeNumber,
+                  )
+                : TextFormFieldRegular(
+                    labelText: textFormTitle,
+                    hintText: textFormHint,
+                    prefixIconData: prefixIconData,
+                    textController: textController,
+                    inputType: inputType),
             const SizedBox(height: 20.0),
             RegularElevatedButton(
                 buttonText: buttonTitle,

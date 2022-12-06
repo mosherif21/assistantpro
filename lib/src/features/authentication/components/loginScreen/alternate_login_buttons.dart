@@ -1,4 +1,6 @@
+import 'package:assistantpro/authentication/authentication_repository.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
+import 'package:assistantpro/src/routing/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
@@ -36,7 +38,17 @@ class AlternateLoginButtons extends StatelessWidget {
             : SignInButton(
                 Buttons.GoogleDark,
                 text: 'loginWithGoogle'.tr,
-                onPressed: () {},
+                onPressed: () async {
+                  showLoadingScreen();
+                  var returnMessage = await AuthenticationRepository.instance
+                      .signInWithGoogle();
+                  hideLoadingScreen();
+                  if (returnMessage.compareTo('success') != 0) {
+                    Get.snackbar('Google Authentication failed', returnMessage,
+                        snackPosition: SnackPosition.BOTTOM,
+                        margin: const EdgeInsets.all(20.0));
+                  }
+                },
                 height: buttonsHeight,
                 width: buttonsWidth,
               ),
@@ -44,7 +56,7 @@ class AlternateLoginButtons extends StatelessWidget {
         SignInButton(
           Buttons.Facebook,
           text: 'loginWithFacebook'.tr,
-          onPressed: () => Get.offAll(() => const NotAvailableErrorWidget()),
+          onPressed: () => Get.to(() => const NotAvailableErrorWidget()),
           height: buttonsHeight,
           width: buttonsWidth,
         ),

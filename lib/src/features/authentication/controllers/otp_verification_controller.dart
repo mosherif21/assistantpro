@@ -12,12 +12,8 @@ class OtpVerificationController extends GetxController {
 
   Future<String> signInWithOTPPhone(String phoneNumber) async {
     String returnMessage;
-    if (phoneNumber.length == 13 && phoneNumber.isPhoneNumber) {
-      returnMessage = await AuthenticationRepository.instance
-          .signInWithPhoneNumber(phoneNumber);
-    } else {
-      returnMessage = 'Please enter a valid phone number';
-    }
+    returnMessage = await AuthenticationRepository.instance
+        .signInWithPhoneNumber(phoneNumber);
     return returnMessage;
   }
 

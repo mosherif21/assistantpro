@@ -91,7 +91,22 @@ class AuthenticationRepository extends GetxController {
     return 'Unknown error occurred';
   }
 
-  Future<void> signInWithGoogle(String email, String password) async {}
+  Future<String> signInWithGoogle() async {
+    User? user;
+    final GoogleAuthProvider authProvider = GoogleAuthProvider();
+    try {
+      final UserCredential userCredential =
+          await _auth.signInWithPopup(authProvider);
+      user = userCredential.user;
+      if (user != null) {
+        Get.offAll(() => const LoginScreen());
+        return 'success';
+      }
+    } catch (e) {
+      if (kDebugMode) e.printError();
+    }
+    return 'Google authentication failed';
+  }
 
   Future<void> logoutUser() async {
     await _auth.signOut();

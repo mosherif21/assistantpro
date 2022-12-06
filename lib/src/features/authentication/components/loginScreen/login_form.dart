@@ -33,6 +33,7 @@ class LoginForm extends StatelessWidget {
               hintText: 'emailHintLabel'.tr,
               prefixIconData: Icons.email_outlined,
               textController: controller.email,
+              inputType: InputType.email,
             ),
             const SizedBox(height: 10),
             TextFormFieldPassword(

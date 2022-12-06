@@ -1,4 +1,5 @@
 import 'package:assistantpro/src/common_widgets/regular_elevated_button.dart';
+import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/features/authentication/controllers/register_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,7 @@ class EmailRegisterForm extends StatelessWidget {
               hintText: 'emailHintLabel'.tr,
               prefixIconData: Icons.email_outlined,
               textController: controller.email,
+              inputType: InputType.email,
             ),
             const SizedBox(height: 10),
             TextFormFieldPassword(

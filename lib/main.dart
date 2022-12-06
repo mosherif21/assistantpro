@@ -26,7 +26,6 @@ void main() async {
     await AppInit.initialize()
         .then((value) => Get.put(AuthenticationRepository()));
   }
-
   runApp(const MyApp());
 }
 
