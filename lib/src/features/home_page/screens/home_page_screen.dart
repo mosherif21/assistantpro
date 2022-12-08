@@ -1,4 +1,6 @@
 import 'package:assistantpro/firebase/firebase_manage_data.dart';
+import 'package:assistantpro/src/common_widgets/regular_bottom_sheet.dart';
+import 'package:assistantpro/src/common_widgets/regular_elevated_button.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/constants/assets_strings.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
@@ -6,8 +8,10 @@ import 'package:assistantpro/src/features/home_page/components/no_products_error
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
+import '../../../../authentication/authentication_repository.dart';
 import '../../../connectivity/connectivity.dart';
 import '../components/assitantpro_product.dart';
+import '../components/select_add_product.dart';
 
 class HomePageScreen extends StatelessWidget {
   const HomePageScreen({Key? key}) : super(key: key);
@@ -16,12 +20,12 @@ class HomePageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ConnectivityChecker.checkConnection(true);
     double screenHeight = getScreenHeight(context);
-    double screenWidth = getScreenWidth(context);
+
     final firebaseDataController = FireBaseDataAccess.instance;
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(screenWidth * 0.05),
+          padding: EdgeInsets.all(screenHeight * 0.02),
           child: Column(
             children: [
               Row(
@@ -30,32 +34,32 @@ class HomePageScreen extends StatelessWidget {
                 children: [
                   Image(
                     image: const AssetImage(kLogoImage),
-                    height: screenHeight * 0.1,
+                    height: screenHeight * 0.08,
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                        top: screenHeight * 0.027, left: screenWidth * 0.01),
-                    child: const Text(
+                        top: screenHeight * 0.027, left: screenHeight * 0.01),
+                    child: Text(
                       'AssistantPro',
                       style: TextStyle(
                           fontFamily: 'Bruno Ace',
                           color: Colors.white,
-                          fontSize: 20),
+                          fontSize: screenHeight * 0.02),
                     ),
                   ),
-                  SizedBox(width: screenWidth * 0.1),
+                  SizedBox(width: screenHeight * 0.012),
                   Container(
                     margin: EdgeInsets.only(
-                        top: screenHeight * 0.027, left: screenWidth * 0.01),
+                        top: screenHeight * 0.027, left: screenHeight * 0.01),
                     child: TextButton(
                       onPressed: () {},
                       child: Text(
                         AppInit.currentDeviceLanguage == Language.english
                             ? 'ENG'
                             : 'AR',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontFamily: 'Bruno Ace',
-                            fontSize: 16,
+                            fontSize: screenHeight * 0.02,
                             color: Colors.white),
                       ),
                     ),
@@ -69,7 +73,7 @@ class HomePageScreen extends StatelessWidget {
                       child: Image(
                         image: const AssetImage(kWebImage),
                         fit: BoxFit.fill,
-                        height: screenHeight * 0.05,
+                        height: screenHeight * 0.04,
                       ),
                     ),
                   )
@@ -89,7 +93,7 @@ class HomePageScreen extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * 0.01),
                   Container(
-                    height: screenHeight * 0.6,
+                    height: screenHeight * 0.65,
                     width: double.infinity,
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -108,7 +112,6 @@ class HomePageScreen extends StatelessWidget {
                                         in firebaseDataController.userProducts)
                                       Product(
                                         screenHeight: screenHeight,
-                                        screenWidth: screenWidth,
                                         product: product,
                                       )
                                   ],
@@ -117,6 +120,32 @@ class HomePageScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ),
+                  SizedBox(height: screenHeight * 0.03),
+                  // Container(
+                  //   width: double.infinity,
+                  //   decoration: const BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.only(
+                  //       topRight: Radius.circular(15),
+                  //       topLeft: Radius.circular(15),
+                  //     ),
+                  //   ),
+                  // ),
+                  RegularElevatedButton(
+                    buttonText: 'Add device',
+                    height: screenHeight,
+                    onPressed: () => RegularBottomSheet.showRegularBottomSheet(
+                        const ChooseAddDeviceMethod()),
+                    enabled: true,
+                  ),
+                  const SizedBox(height: 10.0),
+                  RegularElevatedButton(
+                    buttonText: 'Logout',
+                    height: screenHeight,
+                    onPressed: () =>
+                        AuthenticationRepository.instance.logoutUser(),
+                    enabled: true,
                   ),
                 ],
               )

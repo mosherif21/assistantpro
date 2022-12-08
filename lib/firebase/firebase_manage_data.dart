@@ -64,8 +64,8 @@ class FireBaseDataAccess extends GetxController {
             final snapshot =
                 await dbRef.child('products/$productName/$productId').get();
             if (snapshot.exists) {
-              Map<String, dynamic> productMap =
-                  snapshot.value as Map<String, dynamic>;
+              Map<dynamic, dynamic> productMap =
+                  snapshot.value as Map<dynamic, dynamic>;
               final product = AssistantProProduct(
                 productName: productName.toString(),
                 macAddress: productMap['macAddress'],
