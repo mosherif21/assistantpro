@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../constants/app_init_constants.dart';
 import '../../../routing/loading_screen.dart';
-import '../../home_page/screens/home_page.dart';
+import '../../home_page/screens/home_page_screen.dart';
 
 class OtpVerificationController extends GetxController {
   static OtpVerificationController get instance => Get.find();
@@ -45,7 +45,7 @@ class OtpVerificationController extends GetxController {
         : await verifyOTPEmail(verificationCode);
     hideLoadingScreen();
     if (returnMessage.compareTo('success') == 0) {
-      Get.offAll(() => const HomePage());
+      Get.offAll(() => const HomePageScreen());
     } else {
       Get.snackbar(
         'error'.tr,

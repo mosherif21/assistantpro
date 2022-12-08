@@ -72,6 +72,7 @@ class Languages extends Translations {
           'emptyFields': 'لا يمكن أن تكون الخانات فارغة',
           'smallPass': 'لا يمكن أن تكون كلمة المرور أقل من 8 أحرف',
           'passwordNotMatch': 'كلمات المرور غير متطابقة',
+          'countIs': 'العدد هو:',
         },
         'en_US': {
           'onBoardingTitle1': 'Fast ambulance requests',
@@ -143,6 +144,7 @@ class Languages extends Translations {
           'emptyFields': 'Fields can\'t be empty',
           'smallPass': 'Password can\'t be less than 8 characters',
           'passwordNotMatch': 'Passwords doesn\'t match',
+          'countIs': 'Count is:'
         },
       };
 }

@@ -22,3 +22,9 @@ const String kPhoneVerificationAnim = "assets/lottie_animations/otp_code2.json";
 const String kPhoneOTPAnim = "assets/lottie_animations/otp_code3.json";
 const String kEmailOTPAnim = "assets/lottie_animations/mail_verification.json";
 const String kNoInternetAnim = "assets/lottie_animations/no_internet.json";
+
+const String kWebImage = "assets/images/web.png";
+const String kRobotImage = "assets/images/robot.png";
+const String kWarningImage = "assets/images/warning.png";
+
+const String kRefrigeratorTray = "assets/images/minibar.png";

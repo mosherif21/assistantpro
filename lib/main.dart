@@ -1,7 +1,7 @@
 import 'package:assistantpro/src/connectivity/connectivity_controller.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
-import 'package:assistantpro/src/features/home_page/screens/home_page.dart';
+import 'package:assistantpro/src/features/home_page/screens/home_page_screen.dart';
 import 'package:assistantpro/src/features/onboarding/screens/on_boarding_screen.dart';
 import 'package:assistantpro/src/routing/splash_screen.dart';
 import 'package:assistantpro/src/utils/theme/theme.dart';
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           home: AppInit.showOnBoard
               ? const OnBoardingScreen()
               : AuthenticationRepository.instance.isUserLoggedIn
-                  ? const HomePage()
+                  ? const HomePageScreen()
                   : const LoginScreen(),
         );
       },

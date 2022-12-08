@@ -1,11 +1,12 @@
 import 'package:assistantpro/authentication/exception_errors/password_reset_exceptions.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
-import 'package:assistantpro/src/features/home_page/screens/home_page.dart';
+import 'package:assistantpro/src/features/home_page/screens/home_page_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../firebase/firebase_manage_data.dart';
 import 'exception_errors/signin_email_password_exceptions.dart';
 import 'exception_errors/signup_email_password_exceptions.dart';
 
@@ -21,7 +22,10 @@ class AuthenticationRepository extends GetxController {
   @override
   void onReady() {
     fireUser = Rx<User?>(_auth.currentUser);
-    if (fireUser.value != null) isUserLoggedIn = true;
+    if (fireUser.value != null) {
+      isUserLoggedIn = true;
+      Get.put(FireBaseDataAccess());
+    }
     fireUser.bindStream(_auth.userChanges());
   }
 
@@ -30,9 +34,12 @@ class AuthenticationRepository extends GetxController {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      if (fireUser.value != null) Get.offAll(() => const HomePage());
-      isUserLoggedIn = true;
-      return 'success';
+      if (fireUser.value != null) {
+        Get.offAll(() => const HomePageScreen());
+        isUserLoggedIn = true;
+        Get.put(FireBaseDataAccess());
+        return 'success';
+      }
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
       if (kDebugMode) print('FIREBASE AUTH EXCEPTION : ${ex.errorMessage}');
@@ -45,9 +52,12 @@ class AuthenticationRepository extends GetxController {
       String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      if (fireUser.value != null) Get.offAll(() => const HomePage());
-      isUserLoggedIn = true;
-      return 'success';
+      if (fireUser.value != null) {
+        Get.offAll(() => const HomePageScreen());
+        isUserLoggedIn = true;
+        Get.put(FireBaseDataAccess());
+        return 'success';
+      }
     } on FirebaseAuthException catch (e) {
       final ex = SignInWithEmailAndPasswordFailure.code(e.code);
       if (kDebugMode) print('FIREBASE AUTH EXCEPTION : ${ex.errorMessage}');
@@ -62,8 +72,11 @@ class AuthenticationRepository extends GetxController {
       await _auth.verifyPhoneNumber(
           phoneNumber: phoneNumber,
           verificationCompleted: (credential) async {
-            await _auth.signInWithCredential(credential);
-            Get.offAll(() => const HomePage());
+            final auth = await _auth.signInWithCredential(credential);
+            if (auth.user != null) {
+              Get.offAll(() => const HomePageScreen());
+              Get.put(FireBaseDataAccess());
+            }
           },
           verificationFailed: (e) {
             returnMessage = e.code;
@@ -89,7 +102,10 @@ class AuthenticationRepository extends GetxController {
       credentials = await _auth.signInWithCredential(
           PhoneAuthProvider.credential(
               verificationId: verificationId.value, smsCode: otp));
-      if (credentials.user != null) return 'success';
+      if (credentials.user != null) {
+        Get.put(FireBaseDataAccess());
+        return 'success';
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code.compareTo('invalid-verification-code') == 0) {
         return 'wrongOTP'.tr;
@@ -118,7 +134,8 @@ class AuthenticationRepository extends GetxController {
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
         if (userCredential.user != null) {
-          Get.offAll(() => const HomePage());
+          Get.offAll(() => const HomePageScreen());
+          Get.put(FireBaseDataAccess());
           return 'success';
         }
       }

@@ -61,7 +61,10 @@ flutter_native_splash:
     #branding: assets/images/logo.png
     #branding_dark: assets/images/logo.png
 flutter:
-
+  fonts:
+    - family: Bruno Ace
+      fonts:
+        - asset: assets/fonts/BrunoAceRegular.ttf
 
   uses-material-design: true
 
