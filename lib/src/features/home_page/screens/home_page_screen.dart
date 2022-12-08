@@ -6,7 +6,7 @@ import 'package:assistantpro/src/constants/assets_strings.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/home_page/components/no_products_error.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
 
 import '../../../../authentication/authentication_repository.dart';
 import '../../../connectivity/connectivity.dart';
@@ -20,7 +20,7 @@ class HomePageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ConnectivityChecker.checkConnection(true);
     double screenHeight = getScreenHeight(context);
-
+    Get.put(FireBaseDataAccess());
     final firebaseDataController = FireBaseDataAccess.instance;
     return Scaffold(
       body: SafeArea(

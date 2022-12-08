@@ -11,7 +11,7 @@ import '../routing/splash_screen.dart';
 
 enum Language { english, arabic }
 
-enum InputType { email, phone }
+enum InputType { email, phone, text }
 
 class AppInit {
   static bool showOnBoard = false;

@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../firebase/firebase_manage_data.dart';
 import 'exception_errors/signin_email_password_exceptions.dart';
 import 'exception_errors/signup_email_password_exceptions.dart';
 
@@ -24,7 +23,6 @@ class AuthenticationRepository extends GetxController {
     fireUser = Rx<User?>(_auth.currentUser);
     if (fireUser.value != null) {
       isUserLoggedIn = true;
-      Get.put(FireBaseDataAccess());
     }
     fireUser.bindStream(_auth.userChanges());
   }
@@ -37,7 +35,6 @@ class AuthenticationRepository extends GetxController {
       if (fireUser.value != null) {
         Get.offAll(() => const HomePageScreen());
         isUserLoggedIn = true;
-        Get.put(FireBaseDataAccess());
         return 'success';
       }
     } on FirebaseAuthException catch (e) {
@@ -55,7 +52,6 @@ class AuthenticationRepository extends GetxController {
       if (fireUser.value != null) {
         Get.offAll(() => const HomePageScreen());
         isUserLoggedIn = true;
-        Get.put(FireBaseDataAccess());
         return 'success';
       }
     } on FirebaseAuthException catch (e) {
@@ -75,7 +71,6 @@ class AuthenticationRepository extends GetxController {
             final auth = await _auth.signInWithCredential(credential);
             if (auth.user != null) {
               Get.offAll(() => const HomePageScreen());
-              Get.put(FireBaseDataAccess());
             }
           },
           verificationFailed: (e) {
@@ -103,7 +98,6 @@ class AuthenticationRepository extends GetxController {
           PhoneAuthProvider.credential(
               verificationId: verificationId.value, smsCode: otp));
       if (credentials.user != null) {
-        Get.put(FireBaseDataAccess());
         return 'success';
       }
     } on FirebaseAuthException catch (e) {
@@ -135,7 +129,6 @@ class AuthenticationRepository extends GetxController {
             await _auth.signInWithCredential(credential);
         if (userCredential.user != null) {
           Get.offAll(() => const HomePageScreen());
-          Get.put(FireBaseDataAccess());
           return 'success';
         }
       }
@@ -160,8 +153,8 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> logoutUser() async {
+    Get.offAll(() => const LoginScreen());
     await _auth.signOut();
     await googleSignIn?.signOut();
-    Get.offAll(() => const LoginScreen());
   }
 }
