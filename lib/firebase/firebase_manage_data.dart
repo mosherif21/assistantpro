@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assistantpro/mqtt/mqtt_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
@@ -15,10 +16,6 @@ class FireBaseDataAccess extends GetxController {
   late final StreamSubscription productsListener;
   FireBaseDataAccess() {
     if (_userUid != null) dbRef = FirebaseDatabase.instance.ref();
-  }
-  @override
-  void onInit() async {
-    super.onInit();
     if (_userUid != null) listenForUserProducts();
   }
 
@@ -50,24 +47,30 @@ class FireBaseDataAccess extends GetxController {
                   setTopic: productMap['setTopic'],
                   usageName: productMap['usage'],
                   productId: productId.toString(),
+                  minimumQuantity:
+                      int.parse(productMap['minQuantity'].toString()),
+                  currentQuantity:
+                      int.parse(productMap['currentQuantity'].toString()),
+                  mqttProductHandler: MQTTProductHandler(),
                 );
-                if (kDebugMode) print(product.toString());
+
                 productsList.add(product);
               }
             }
             userProducts.value = productsList;
-            if (kDebugMode) print(userProducts.length);
           } else {
             userProducts.value = [];
-            if (kDebugMode) print(userProducts.length);
+            if (kDebugMode) {
+              print('no of user registered products: ${userProducts.length}');
+            }
           }
         },
       );
     }
   }
 
-  Future<String> registerNewProduct(
-      String productId, String productName, String usageName) async {
+  Future<String> registerNewProduct(String productId, String productName,
+      String usageName, int minimumQuantity) async {
     var productExist = '';
     if (_userUid != null) {
       await dbRef
@@ -79,6 +82,9 @@ class FireBaseDataAccess extends GetxController {
               .child('products/$productName/$productId/usage')
               .set(usageName);
           await dbRef
+              .child('products/$productName/$productId/minQuantity')
+              .set(minimumQuantity.toString());
+          await dbRef
               .child('users/$_userUid/registeredDevices/$productId')
               .set(productName);
           return 'success';
@@ -88,6 +94,22 @@ class FireBaseDataAccess extends GetxController {
       });
     }
     return productExist;
+  }
+
+  Future<void> updateCounterValue(
+      String productId, String productName, int currentQuantity) async {
+    if (_userUid != null) {
+      await dbRef
+          .child('products/$productName/$productId')
+          .once()
+          .then((value) async {
+        if (value.snapshot.exists) {
+          await dbRef
+              .child('products/$productName/$productId/currentQuantity')
+              .set(currentQuantity);
+        }
+      });
+    }
   }
 
   Future<void> removeProduct(String productId) async {

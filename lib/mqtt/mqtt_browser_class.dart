@@ -1,4 +1,4 @@
-//import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:mqtt_client/mqtt_browser_client.dart';
@@ -17,7 +17,6 @@ enum MqttSubscriptionState { idle, subscribed }
 
 class MQTTClientBrowserWrapper {
   late MqttBrowserClient client;
-
   MqttCurrentConnectionState connectionState = MqttCurrentConnectionState.idle;
   MqttSubscriptionState subscriptionState = MqttSubscriptionState.idle;
 
@@ -70,31 +69,6 @@ class MQTTClientBrowserWrapper {
     client.onDisconnected = _onDisconnected;
     client.onConnected = _onConnected;
     client.onSubscribed = _onSubscribed;
-  }
-
-  void _subscribeToTopic(String topicName) {
-    if (kDebugMode) print('Subscribing to the $topicName topic');
-    client.subscribe(topicName, MqttQos.atMostOnce);
-
-    // print the message when it is received
-    client.updates?.listen((List<MqttReceivedMessage> c) {
-      final MqttPublishMessage recMess = c[0].payload;
-      var message =
-          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-
-      if (kDebugMode) print('YOU GOT A NEW MESSAGE:');
-      if (kDebugMode) print(message);
-    });
-  }
-
-  void _publishMessage(String message) {
-    final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
-    builder.addString(message);
-    final builderPayload = builder.payload;
-    if (kDebugMode) {
-      print('Publishing message "$message" to topic ${'networks'}');
-    }
-    client.publishMessage('networks', MqttQos.exactlyOnce, builderPayload!);
   }
 
   // callbacks for different events

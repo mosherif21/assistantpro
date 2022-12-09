@@ -17,7 +17,6 @@ enum MqttSubscriptionState { idle, subscribed }
 
 class MQTTClientServerWrapper {
   late MqttServerClient client;
-
   MqttCurrentConnectionState connectionState = MqttCurrentConnectionState.idle;
   MqttSubscriptionState subscriptionState = MqttSubscriptionState.idle;
 
@@ -25,8 +24,6 @@ class MQTTClientServerWrapper {
   Future<void> prepareMqttClient() async {
     _setupMqttClient();
     await _connectClient();
-    _subscribeToTopic('networks');
-    // _publishMessage('Hello');
   }
 
   // waiting for the connection, if an error occurs, print it and disconnect
@@ -69,31 +66,6 @@ class MQTTClientServerWrapper {
     client.onDisconnected = _onDisconnected;
     client.onConnected = _onConnected;
     client.onSubscribed = _onSubscribed;
-  }
-
-  void _subscribeToTopic(String topicName) {
-    if (kDebugMode) print('Subscribing to the $topicName topic');
-    client.subscribe(topicName, MqttQos.atMostOnce);
-
-    // print the message when it is received
-    client.updates?.listen((List<MqttReceivedMessage> c) {
-      final MqttPublishMessage recMess = c[0].payload;
-      var message =
-          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-
-      if (kDebugMode) print('YOU GOT A NEW MESSAGE:');
-      if (kDebugMode) print(message);
-    });
-  }
-
-  void _publishMessage(String message) {
-    final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
-    builder.addString(message);
-    final builderPayload = builder.payload;
-    if (kDebugMode) {
-      print('Publishing message "$message" to topic ${'networks'}');
-    }
-    client.publishMessage('networks', MqttQos.exactlyOnce, builderPayload!);
   }
 
   // callbacks for different events

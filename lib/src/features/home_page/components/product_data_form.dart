@@ -17,8 +17,9 @@ class ProductDataForm extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormFieldRegular(
@@ -75,11 +76,7 @@ class ProductDataForm extends StatelessWidget {
                 height: height,
                 enabled: true,
                 onPressed: () async {
-                  final checkSuccess = await controller.registerNewProduct(
-                    controller.productIdController.text,
-                    controller.productNameController.text,
-                    controller.usageLabelController.text,
-                  );
+                  final checkSuccess = await controller.registerNewProduct();
                   if (checkSuccess) Get.back();
                 },
               ),

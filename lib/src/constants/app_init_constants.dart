@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../firebase/firebase_initializations.dart';
 import '../../localization/language/language_functions.dart';
+import '../../mqtt/mqtt_browser_class.dart';
 import '../features/onboarding/components/onboarding_shared_preferences.dart';
 import '../routing/splash_screen.dart';
 
@@ -53,10 +54,10 @@ class AppInit {
       isIos = true;
     }
     if (AppInit.isWeb) {
-      // mqttClient = MQTTClientBrowserWrapper();
-      // await mqttClient.prepareMqttClient();
+      mqttClient = MQTTClientBrowserWrapper();
+      await mqttClient.prepareMqttClient();
     } else {
-      //mqttClient = MQTTClientServerWrapper();
+      // mqttClient = MQTTClientServerWrapper();
       // await mqttClient.prepareMqttClient();
     }
   }

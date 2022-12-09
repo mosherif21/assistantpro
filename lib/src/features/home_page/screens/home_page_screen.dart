@@ -122,16 +122,6 @@ class HomePageScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.03),
-                  // Container(
-                  //   width: double.infinity,
-                  //   decoration: const BoxDecoration(
-                  //     color: Colors.white,
-                  //     borderRadius: BorderRadius.only(
-                  //       topRight: Radius.circular(15),
-                  //       topLeft: Radius.circular(15),
-                  //     ),
-                  //   ),
-                  // ),
                   RegularElevatedButton(
                     buttonText: 'Add device',
                     height: screenHeight,
@@ -143,8 +133,13 @@ class HomePageScreen extends StatelessWidget {
                   RegularElevatedButton(
                     buttonText: 'Logout',
                     height: screenHeight,
-                    onPressed: () =>
-                        AuthenticationRepository.instance.logoutUser(),
+                    onPressed: () {
+                      for (var product in firebaseDataController.userProducts) {
+                        AppInit.mqttClient.client
+                            .unsubscribe(product.getGetTopic());
+                      }
+                      AuthenticationRepository.instance.logoutUser();
+                    },
                     enabled: true,
                   ),
                 ],
