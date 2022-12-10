@@ -153,8 +153,8 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> logoutUser() async {
+    await Get.offAll(() => const LoginScreen());
     await _auth.signOut();
     await googleSignIn?.signOut();
-    Get.offAll(() => const LoginScreen());
   }
 }

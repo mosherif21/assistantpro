@@ -31,7 +31,7 @@ class AssistantProProduct {
     _currentQuantity = currentQuantity;
     _mqttProductHandler = mqttProductHandler;
     _mqttProductHandler.countTracker.value = currentQuantity;
-    _mqttProductHandler.setCurrentQuantity(currentQuantity, _setTopic);
+    _mqttProductHandler.setCurrentQuantity('s$currentQuantity', _setTopic);
   }
   String getProductName() {
     return _productName;

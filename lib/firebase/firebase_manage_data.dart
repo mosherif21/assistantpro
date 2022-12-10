@@ -50,7 +50,8 @@ class FireBaseDataAccess extends GetxController {
                   minimumQuantity:
                       int.parse(productMap['minQuantity'].toString()),
                   currentQuantity:
-                      int.parse(productMap['currentQuantity'].toString()),
+                      int.tryParse(productMap['currentQuantity'].toString()) ??
+                          0,
                   mqttProductHandler: MQTTProductHandler(),
                 );
 
@@ -70,7 +71,7 @@ class FireBaseDataAccess extends GetxController {
   }
 
   Future<String> registerNewProduct(String productId, String productName,
-      String usageName, int minimumQuantity) async {
+      String usageName, int minimumQuantity, int currentQuantity) async {
     var productExist = '';
     if (_userUid != null) {
       await dbRef
@@ -84,6 +85,9 @@ class FireBaseDataAccess extends GetxController {
           await dbRef
               .child('products/$productName/$productId/minQuantity')
               .set(minimumQuantity.toString());
+          await dbRef
+              .child('products/$productName/$productId/currentQuantity')
+              .set(currentQuantity.toString());
           await dbRef
               .child('users/$_userUid/registeredDevices/$productId')
               .set(productName);

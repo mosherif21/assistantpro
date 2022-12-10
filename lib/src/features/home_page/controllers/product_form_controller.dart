@@ -29,8 +29,12 @@ class ProductAddController extends GetxController {
       if (int.parse(minimumQuantityController.text.trim()) >= 0 &&
           int.parse(currentQuantityController.text.trim()) > 0) {
         returnMessage.value = await FireBaseDataAccess.instance
-            .registerNewProduct(productId, productName, usageLabel,
-                int.parse(minimumQuantityController.text));
+            .registerNewProduct(
+                productId,
+                productName,
+                usageLabel,
+                int.parse(minimumQuantityController.text.trim()),
+                int.parse(currentQuantityController.text.trim()));
         success = true;
       } else {
         returnMessage.value =

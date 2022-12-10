@@ -34,7 +34,7 @@ class MQTTProductHandler {
     }
   }
 
-  void setCurrentQuantity(int currentQuantity, String topicName) {
+  void setCurrentQuantity(String currentQuantity, String topicName) {
     _publishMessage(currentQuantity.toString(), topicName);
   }
 
