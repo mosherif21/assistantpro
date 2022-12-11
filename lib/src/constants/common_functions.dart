@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../firebase/firebase_manage_data.dart';
 import '../features/home_page/screens/home_page_screen.dart';
 
 double getScreenHeight(BuildContext context) {
@@ -13,6 +12,5 @@ double getScreenWidth(BuildContext context) {
 }
 
 void getToHomePage() {
-  Get.put(FireBaseDataAccess());
   Get.offAll(() => const HomePageScreen());
 }

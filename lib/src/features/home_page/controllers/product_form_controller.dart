@@ -35,7 +35,7 @@ class ProductAddController extends GetxController {
                 usageLabel,
                 int.parse(minimumQuantityController.text.trim()),
                 int.parse(currentQuantityController.text.trim()));
-        success = true;
+        if (returnMessage.value.compareTo('success') == 0) success = true;
       } else {
         returnMessage.value = 'noQuantity'.tr;
       }

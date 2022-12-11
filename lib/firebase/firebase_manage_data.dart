@@ -14,14 +14,17 @@ class FireBaseDataAccess extends GetxController {
   final _userUid = FirebaseAuth.instance.currentUser?.uid;
   late final DatabaseReference dbRef;
   late final StreamSubscription productsListener;
-  FireBaseDataAccess() {
-    if (_userUid != null) dbRef = FirebaseDatabase.instance.ref();
-    if (_userUid != null) listenForUserProducts();
-  }
 
   @override
   void onClose() async {
     await productsListener.cancel();
+  }
+
+  @override
+  void onInit() async {
+    super.onInit();
+    if (_userUid != null) dbRef = FirebaseDatabase.instance.ref();
+    if (_userUid != null) listenForUserProducts();
   }
 
   void listenForUserProducts() {
@@ -91,9 +94,9 @@ class FireBaseDataAccess extends GetxController {
           await dbRef
               .child('users/$_userUid/registeredDevices/$productId')
               .set(productName);
-          return 'success';
+          productExist = 'success';
         } else {
-          return 'Product doesn\'t exist';
+          productExist = 'Product doesn\'t exist';
         }
       });
     }
