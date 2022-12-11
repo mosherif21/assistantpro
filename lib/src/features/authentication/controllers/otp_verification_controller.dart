@@ -1,10 +1,10 @@
 import 'package:assistantpro/authentication/authentication_repository.dart';
+import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/app_init_constants.dart';
 import '../../../routing/loading_screen.dart';
-import '../../home_page/screens/home_page_screen.dart';
 
 class OtpVerificationController extends GetxController {
   static OtpVerificationController get instance => Get.find();
@@ -45,7 +45,7 @@ class OtpVerificationController extends GetxController {
         : await verifyOTPEmail(verificationCode);
     hideLoadingScreen();
     if (returnMessage.compareTo('success') == 0) {
-      Get.offAll(() => const HomePageScreen());
+      getToHomePage();
     } else {
       Get.snackbar(
         'error'.tr,

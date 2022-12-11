@@ -22,7 +22,6 @@ class HomePageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ConnectivityChecker.checkConnection(true);
     double screenHeight = getScreenHeight(context);
-    Get.put(FireBaseDataAccess());
     final firebaseDataController = FireBaseDataAccess.instance;
     return Scaffold(
       body: SafeArea(

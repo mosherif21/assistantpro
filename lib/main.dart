@@ -1,3 +1,4 @@
+import 'package:assistantpro/firebase/firebase_manage_data.dart';
 import 'package:assistantpro/src/connectivity/connectivity_controller.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
@@ -35,6 +36,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (AppInit.showOnBoard) removeSplashScreen();
+    if (AuthenticationRepository.instance.isUserLoggedIn)
+      Get.put(FireBaseDataAccess());
     return FlutterWebFrame(
       builder: (context) {
         return GetMaterialApp(

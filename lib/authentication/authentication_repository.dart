@@ -1,6 +1,6 @@
 import 'package:assistantpro/authentication/exception_errors/password_reset_exceptions.dart';
+import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
-import 'package:assistantpro/src/features/home_page/screens/home_page_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -33,7 +33,6 @@ class AuthenticationRepository extends GetxController {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (fireUser.value != null) {
-        Get.offAll(() => const HomePageScreen());
         isUserLoggedIn = true;
         return 'success';
       }
@@ -50,7 +49,7 @@ class AuthenticationRepository extends GetxController {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       if (fireUser.value != null) {
-        Get.offAll(() => const HomePageScreen());
+        getToHomePage();
         isUserLoggedIn = true;
         return 'success';
       }
@@ -70,7 +69,7 @@ class AuthenticationRepository extends GetxController {
           verificationCompleted: (credential) async {
             final auth = await _auth.signInWithCredential(credential);
             if (auth.user != null) {
-              Get.offAll(() => const HomePageScreen());
+              getToHomePage();
             }
           },
           verificationFailed: (e) {
@@ -128,7 +127,7 @@ class AuthenticationRepository extends GetxController {
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
         if (userCredential.user != null) {
-          Get.offAll(() => const HomePageScreen());
+          getToHomePage();
           return 'success';
         }
       }
