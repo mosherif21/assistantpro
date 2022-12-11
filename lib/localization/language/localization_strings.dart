@@ -172,7 +172,7 @@ class Languages extends Translations {
           'noDevices': 'No devices connected',
           'noQuantity':
               'Current quantity and Min quantity must be non negative integers',
-          'productId': 'product id',
+          'productId': 'Product id',
           'enterProductId': 'Enter product id',
           'productName': 'Product Name',
           'enterProductName': 'Enter product name',
