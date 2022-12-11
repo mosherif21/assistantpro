@@ -1,5 +1,4 @@
 import 'package:assistantpro/src/common_widgets/regular_bottom_sheet.dart';
-import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/home_page/components/product_data_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,11 +6,11 @@ import 'package:get/get.dart';
 import '../../../common_widgets/framed_button.dart';
 
 class ChooseAddDeviceMethod extends StatelessWidget {
-  const ChooseAddDeviceMethod({Key? key}) : super(key: key);
-
+  const ChooseAddDeviceMethod({Key? key, required this.screenHeight})
+      : super(key: key);
+  final double screenHeight;
   @override
   Widget build(BuildContext context) {
-    double screenHeight = getScreenHeight(context);
     return Container(
       padding: const EdgeInsets.all(30.0),
       child: Column(
@@ -37,7 +36,7 @@ class ChooseAddDeviceMethod extends StatelessWidget {
             iconData: Icons.password,
             onPressed: () {
               RegularBottomSheet.hideBottomSheet();
-              Get.to(() => const ProductDataForm(
+              Get.to(() => ProductDataForm(
                     productId: '',
                     productName: '',
                   ));

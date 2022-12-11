@@ -1,3 +1,4 @@
+import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/styles.dart';
@@ -6,19 +7,18 @@ class RegularElevatedButton extends StatelessWidget {
   const RegularElevatedButton({
     Key? key,
     required this.buttonText,
-    required this.height,
     required this.onPressed,
     required this.enabled,
   }) : super(key: key);
   final String buttonText;
-  final double height;
   final Function onPressed;
   final bool enabled;
   @override
   Widget build(BuildContext context) {
+    double screenHeight = getScreenHeight(context);
     return SizedBox(
       width: double.infinity,
-      height: height * 0.05,
+      height: screenHeight * 0.05,
       child: ElevatedButton(
         style: kElevatedButtonRegularStyle,
         onPressed: () => enabled ? onPressed() : null,

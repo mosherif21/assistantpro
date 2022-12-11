@@ -26,138 +26,143 @@ class HomePageScreen extends StatelessWidget {
     final firebaseDataController = FireBaseDataAccess.instance;
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image(
-                    image: const AssetImage(kLogoImage),
-                    height: screenHeight * 0.08,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: screenHeight * 0.027, left: screenHeight * 0.01),
-                    child: Text(
-                      'AssistantPro',
-                      style: TextStyle(
-                          fontFamily: 'Bruno Ace',
-                          color: Colors.white,
-                          fontSize: screenHeight * 0.02),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: const AssetImage(kLogoImage),
+                      height: screenHeight * 0.08,
                     ),
-                  ),
-                  SizedBox(width: screenHeight * 0.012),
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: screenHeight * 0.027, left: screenHeight * 0.01),
-                    child: TextButton(
-                      onPressed: () async {
-                        await RegularBottomSheet.showRegularBottomSheet(
-                          LanguageSelect(
-                            onEnglishLanguagePress: () async {
-                              await setLocaleLanguageBack('en');
-                            },
-                            onArabicLanguagePress: () async {
-                              await setLocaleLanguageBack('ar');
-                            },
-                          ),
-                        );
-                      },
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: screenHeight * 0.027, left: screenHeight * 0.01),
                       child: Text(
-                        'lang'.tr,
+                        'AssistantPro',
                         style: TextStyle(
                             fontFamily: 'Bruno Ace',
-                            fontSize: screenHeight * 0.02,
-                            color: Colors.white),
+                            color: Colors.white,
+                            fontSize: screenHeight * 0.02),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: screenHeight * 0.025,
-                    ),
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Image(
-                        image: const AssetImage(kWebImage),
-                        fit: BoxFit.fill,
-                        height: screenHeight * 0.04,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: screenHeight * 0.01),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'devices'.tr,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontFamily: 'Bruno Ace',
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Container(
-                    height: screenHeight * 0.65,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SingleChildScrollView(
-                        child: Obx(
-                          () => firebaseDataController.userProducts.isNotEmpty
-                              ? Column(
-                                  children: [
-                                    for (var product
-                                        in firebaseDataController.userProducts)
-                                      Product(
-                                        screenHeight: screenHeight,
-                                        product: product,
-                                      )
-                                  ],
-                                )
-                              : NoProducts(
-                                  screenHeight: screenHeight,
-                                ),
+                    SizedBox(width: screenHeight * 0.012),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: screenHeight * 0.027, left: screenHeight * 0.01),
+                      child: TextButton(
+                        onPressed: () async {
+                          await RegularBottomSheet.showRegularBottomSheet(
+                            LanguageSelect(
+                              onEnglishLanguagePress: () async {
+                                await setLocaleLanguageBack('en');
+                              },
+                              onArabicLanguagePress: () async {
+                                await setLocaleLanguageBack('ar');
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'lang'.tr,
+                          style: TextStyle(
+                              fontFamily: 'Bruno Ace',
+                              fontSize: screenHeight * 0.02,
+                              color: Colors.white),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.015),
-                  RegularElevatedButton(
-                    buttonText: 'adDevice'.tr,
-                    height: screenHeight,
-                    onPressed: () => RegularBottomSheet.showRegularBottomSheet(
-                        const ChooseAddDeviceMethod()),
-                    enabled: true,
-                  ),
-                  const SizedBox(height: 5.0),
-                  RegularElevatedButton(
-                    buttonText: 'logout'.tr,
-                    height: screenHeight,
-                    onPressed: () {
-                      for (var product in firebaseDataController.userProducts) {
-                        AppInit.mqttClient.client
-                            .unsubscribe(product.getGetTopic());
-                      }
-                      AuthenticationRepository.instance.logoutUser();
-                    },
-                    enabled: true,
-                  ),
-                ],
-              )
-            ],
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: screenHeight * 0.025,
+                      ),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Image(
+                          image: const AssetImage(kWebImage),
+                          fit: BoxFit.fill,
+                          height: screenHeight * 0.04,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.01),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'devices'.tr,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                        fontFamily: 'Bruno Ace',
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.01),
+                    Container(
+                      height: screenHeight * 0.65,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SingleChildScrollView(
+                          child: Obx(
+                            () => firebaseDataController.userProducts.isNotEmpty
+                                ? Column(
+                                    children: [
+                                      for (var product in firebaseDataController
+                                          .userProducts)
+                                        Product(
+                                          screenHeight: screenHeight,
+                                          product: product,
+                                        )
+                                    ],
+                                  )
+                                : NoProducts(
+                                    screenHeight: screenHeight,
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.015),
+                    RegularElevatedButton(
+                      buttonText: 'adDevice'.tr,
+                      onPressed: () =>
+                          RegularBottomSheet.showRegularBottomSheet(
+                        ChooseAddDeviceMethod(
+                          screenHeight: screenHeight,
+                        ),
+                      ),
+                      enabled: true,
+                    ),
+                    const SizedBox(height: 5.0),
+                    RegularElevatedButton(
+                      buttonText: 'logout'.tr,
+                      onPressed: () {
+                        for (var product
+                            in firebaseDataController.userProducts) {
+                          AppInit.mqttClient.client
+                              .unsubscribe(product.getGetTopic());
+                        }
+                        AuthenticationRepository.instance.logoutUser();
+                      },
+                      enabled: true,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

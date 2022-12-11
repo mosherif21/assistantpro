@@ -1,7 +1,6 @@
 import 'package:assistantpro/src/common_widgets/regular_text_button.dart';
 import 'package:assistantpro/src/common_widgets/text_form_field_passwords.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
-import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/authentication/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +17,6 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = getScreenHeight(context);
     final controller = Get.put(LoginController());
 
     return Form(
@@ -33,7 +31,6 @@ class LoginForm extends StatelessWidget {
               prefixIconData: Icons.email_outlined,
               textController: controller.email,
               inputType: InputType.email,
-              initialText: '',
             ),
             const SizedBox(height: 10),
             TextFormFieldPassword(
@@ -63,7 +60,6 @@ class LoginForm extends StatelessWidget {
             RegularElevatedButton(
               enabled: true,
               buttonText: 'loginTextTitle'.tr,
-              height: height,
               onPressed: () async {
                 await controller.loginUser(
                     controller.email.text, controller.password.text);
