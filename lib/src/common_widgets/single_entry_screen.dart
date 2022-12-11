@@ -76,7 +76,9 @@ class SingleEntryScreen extends StatelessWidget {
                     hintText: textFormHint,
                     prefixIconData: prefixIconData,
                     textController: textController,
-                    inputType: inputType),
+                    inputType: inputType,
+                    initialText: '',
+                  ),
             const SizedBox(height: 20.0),
             RegularElevatedButton(
                 buttonText: buttonTitle,

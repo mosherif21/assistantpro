@@ -9,9 +9,11 @@ class TextFormFieldRegular extends StatelessWidget {
     required this.prefixIconData,
     required this.textController,
     required this.inputType,
+    required this.initialText,
   }) : super(key: key);
   final String labelText;
   final String hintText;
+  final String initialText;
   final IconData prefixIconData;
   final TextEditingController textController;
   final InputType inputType;
@@ -19,6 +21,7 @@ class TextFormFieldRegular extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: textController,
+      initialValue: initialText,
       keyboardType: inputType == InputType.email
           ? TextInputType.emailAddress
           : TextInputType.text,

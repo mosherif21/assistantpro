@@ -8,7 +8,13 @@ import '../../../constants/app_init_constants.dart';
 import '../controllers/product_form_controller.dart';
 
 class ProductDataForm extends StatelessWidget {
-  const ProductDataForm({Key? key}) : super(key: key);
+  const ProductDataForm({
+    Key? key,
+    required this.productId,
+    required this.productName,
+  }) : super(key: key);
+  final String productId;
+  final String productName;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +34,7 @@ class ProductDataForm extends StatelessWidget {
                 prefixIconData: Icons.add_circle,
                 textController: controller.productIdController,
                 inputType: InputType.text,
+                initialText: productId,
               ),
               const SizedBox(height: 10),
               TextFormFieldRegular(
@@ -36,6 +43,7 @@ class ProductDataForm extends StatelessWidget {
                 prefixIconData: Icons.add_circle,
                 textController: controller.productNameController,
                 inputType: InputType.text,
+                initialText: productName,
               ),
               const SizedBox(height: 10),
               TextFormFieldRegular(
@@ -44,6 +52,7 @@ class ProductDataForm extends StatelessWidget {
                 prefixIconData: Icons.add_circle,
                 textController: controller.minimumQuantityController,
                 inputType: InputType.text,
+                initialText: '',
               ),
               const SizedBox(height: 10),
               TextFormFieldRegular(
@@ -52,6 +61,7 @@ class ProductDataForm extends StatelessWidget {
                 prefixIconData: Icons.add_circle,
                 textController: controller.currentQuantityController,
                 inputType: InputType.text,
+                initialText: '',
               ),
               const SizedBox(height: 10),
               TextFormFieldRegular(
@@ -60,6 +70,7 @@ class ProductDataForm extends StatelessWidget {
                 prefixIconData: Icons.add_circle,
                 textController: controller.usageLabelController,
                 inputType: InputType.text,
+                initialText: '',
               ),
               const SizedBox(height: 10),
               Obx(
