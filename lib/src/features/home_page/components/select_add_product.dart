@@ -36,10 +36,12 @@ class ChooseAddDeviceMethod extends StatelessWidget {
             iconData: Icons.password,
             onPressed: () {
               RegularBottomSheet.hideBottomSheet();
-              Get.to(() => const ProductDataForm(
-                    productId: '',
-                    productName: '',
-                  ));
+              Get.to(
+                () => const ProductDataForm(
+                  productId: '',
+                  productName: '',
+                ),
+              );
             },
           ),
         ],
