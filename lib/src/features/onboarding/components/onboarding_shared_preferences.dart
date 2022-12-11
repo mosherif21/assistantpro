@@ -31,3 +31,10 @@ Future<void> setLocaleLanguage(String languageCode) async {
     transition: AppInit.getPageTransition(),
   );
 }
+
+Future<void> setLocaleLanguageBack(String languageCode) async {
+  showLoadingScreen();
+  await setOnBoardingLocale(languageCode);
+  hideLoadingScreen();
+  Get.back();
+}

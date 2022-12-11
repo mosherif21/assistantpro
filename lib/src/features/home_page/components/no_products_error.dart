@@ -1,5 +1,6 @@
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../constants/assets_strings.dart';
 
@@ -25,10 +26,10 @@ class NoProducts extends StatelessWidget {
             ),
             SizedBox(height: screenHeight * 0.01),
             Text(
-              'No devices connected',
+              'noDevices'.tr,
               style: TextStyle(
                 color: Colors.grey,
-                fontSize: screenHeight * 0.05,
+                fontSize: screenHeight * 0.025,
                 fontFamily: 'Bruno Ace',
               ),
             )

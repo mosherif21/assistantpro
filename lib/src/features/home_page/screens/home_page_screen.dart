@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../authentication/authentication_repository.dart';
+import '../../../common_widgets/language_select.dart';
 import '../../../connectivity/connectivity.dart';
+import '../../onboarding/components/onboarding_shared_preferences.dart';
 import '../components/assitantpro_product.dart';
 import '../components/select_add_product.dart';
 
@@ -25,7 +27,7 @@ class HomePageScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(screenHeight * 0.02),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
               Row(
@@ -52,11 +54,22 @@ class HomePageScreen extends StatelessWidget {
                     margin: EdgeInsets.only(
                         top: screenHeight * 0.027, left: screenHeight * 0.01),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await RegularBottomSheet.showRegularBottomSheet(
+                          LanguageSelect(
+                            onEnglishLanguagePress: () async {
+                              await setLocaleLanguageBack('en');
+                            },
+                            onArabicLanguagePress: () async {
+                              await setLocaleLanguageBack('ar');
+                            },
+                          ),
+                        );
+                      },
                       child: Text(
                         AppInit.currentDeviceLanguage == Language.english
-                            ? 'ENG'
-                            : 'AR',
+                            ? 'ENG'.tr
+                            : 'AR'.tr,
                         style: TextStyle(
                             fontFamily: 'Bruno Ace',
                             fontSize: screenHeight * 0.02,
@@ -83,9 +96,9 @@ class HomePageScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Devices',
-                    style: TextStyle(
+                  Text(
+                    'devices'.tr,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 32,
                       fontFamily: 'Bruno Ace',
@@ -123,17 +136,17 @@ class HomePageScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(height: screenHeight * 0.015),
                   RegularElevatedButton(
-                    buttonText: 'Add device',
+                    buttonText: 'adDevice'.tr,
                     height: screenHeight,
                     onPressed: () => RegularBottomSheet.showRegularBottomSheet(
                         const ChooseAddDeviceMethod()),
                     enabled: true,
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 5.0),
                   RegularElevatedButton(
-                    buttonText: 'Logout',
+                    buttonText: 'logout'.tr,
                     height: screenHeight,
                     onPressed: () {
                       for (var product in firebaseDataController.userProducts) {

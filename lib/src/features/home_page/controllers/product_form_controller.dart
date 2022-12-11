@@ -24,7 +24,7 @@ class ProductAddController extends GetxController {
             : false;
     bool success = false;
     if (productId.isEmpty || productName.isEmpty || usageLabel.isEmpty) {
-      returnMessage.value = 'Fields can\'t be empty';
+      returnMessage.value = 'emptyFields'.tr;
     } else if (minQIsInt && currentQIsInt) {
       if (int.parse(minimumQuantityController.text.trim()) >= 0 &&
           int.parse(currentQuantityController.text.trim()) > 0) {
@@ -37,12 +37,10 @@ class ProductAddController extends GetxController {
                 int.parse(currentQuantityController.text.trim()));
         success = true;
       } else {
-        returnMessage.value =
-            'Current quantity and Min quantity must be non negative integers';
+        returnMessage.value = 'noQuantity'.tr;
       }
     } else {
-      returnMessage.value =
-          'Current quantity and Min quantity must be non negative integers';
+      returnMessage.value = 'noQuantity'.tr;
     }
     return success;
   }
