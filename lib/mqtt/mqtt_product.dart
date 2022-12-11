@@ -9,7 +9,7 @@ class MQTTProductHandler {
   var countTracker = 0.obs;
   bool subscribed = false;
   final client = AppInit.mqttClient.client;
-
+  int currentSet = 0;
   void subscribeToTopic(
       String topicName, String productId, String productName) {
     if (!subscribed) {
@@ -35,7 +35,11 @@ class MQTTProductHandler {
   }
 
   void setCurrentQuantity(String currentQuantity, String topicName) {
-    _publishMessage(currentQuantity.toString(), topicName);
+    int currentQuantitySet = int.parse(currentQuantity);
+    if (currentQuantitySet != currentSet) {
+      currentSet = currentQuantitySet;
+      _publishMessage(currentQuantity, topicName);
+    }
   }
 
   void _publishMessage(String message, String topicName) {

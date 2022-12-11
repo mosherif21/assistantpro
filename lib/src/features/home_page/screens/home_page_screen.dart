@@ -84,7 +84,7 @@ class HomePageScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Devices",
+                    'Devices',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
@@ -116,7 +116,9 @@ class HomePageScreen extends StatelessWidget {
                                       )
                                   ],
                                 )
-                              : const NoProducts(),
+                              : NoProducts(
+                                  screenHeight: screenHeight,
+                                ),
                         ),
                       ),
                     ),
