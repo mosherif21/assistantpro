@@ -72,7 +72,7 @@ class ProductDataForm extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               RegularElevatedButton(
-                buttonText: 'registerTextTitle'.tr,
+                buttonText: 'registerDevice'.tr,
                 height: height,
                 enabled: true,
                 onPressed: () async {
