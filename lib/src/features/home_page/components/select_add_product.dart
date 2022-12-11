@@ -3,7 +3,6 @@ import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/home_page/components/product_data_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../common_widgets/framed_button.dart';
 
@@ -34,7 +33,7 @@ class ChooseAddDeviceMethod extends StatelessWidget {
           FramedIconButton(
             height: screenHeight * 0.12,
             title: 'productId'.tr,
-            subTitle: 'add using product id',
+            subTitle: 'addProductId'.tr,
             iconData: Icons.password,
             onPressed: () {
               RegularBottomSheet.hideBottomSheet();
