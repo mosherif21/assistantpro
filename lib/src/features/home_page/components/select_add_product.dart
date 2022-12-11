@@ -19,21 +19,21 @@ class ChooseAddDeviceMethod extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'choose a way to add the product',
+            'chooseAddProduct'.tr,
             style: Theme.of(context).textTheme.headline5,
           ),
           SizedBox(height: screenHeight * 0.02),
           FramedIconButton(
             height: screenHeight * 0.12,
-            title: 'qr code',
-            subTitle: 'add using qr code ',
+            title: 'qrCode'.tr,
+            subTitle: 'qrCodeEnter'.tr,
             iconData: Icons.qr_code_scanner,
             onPressed: () {},
           ),
           SizedBox(height: screenHeight * 0.02),
           FramedIconButton(
             height: screenHeight * 0.12,
-            title: 'product id',
+            title: 'productId'.tr,
             subTitle: 'add using product id',
             iconData: Icons.password,
             onPressed: () {

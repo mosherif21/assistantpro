@@ -67,9 +67,7 @@ class HomePageScreen extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        AppInit.currentDeviceLanguage == Language.english
-                            ? 'ENG'.tr
-                            : 'AR'.tr,
+                        'lang'.tr,
                         style: TextStyle(
                             fontFamily: 'Bruno Ace',
                             fontSize: screenHeight * 0.02,
