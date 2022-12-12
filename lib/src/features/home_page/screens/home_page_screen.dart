@@ -153,6 +153,7 @@ class HomePageScreen extends StatelessWidget {
                             in firebaseDataController.userProducts) {
                           mqttClient.client.unsubscribe(product.getGetTopic());
                         }
+                        mqttClient.client.disconnect();
                         AuthenticationRepository.instance.logoutUser();
                       },
                       enabled: true,

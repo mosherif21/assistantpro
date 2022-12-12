@@ -33,6 +33,8 @@ class AuthenticationRepository extends GetxController {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (fireUser.value != null) {
+        await initializeMqttClient();
+        getToHomePage();
         isUserLoggedIn = true;
         return 'success';
       }

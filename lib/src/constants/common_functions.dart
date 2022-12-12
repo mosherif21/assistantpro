@@ -14,7 +14,7 @@ double getScreenWidth(BuildContext context) {
 }
 
 // ignore: prefer_typing_uninitialized_variables
-late final mqttClient;
+var mqttClient;
 
 Future<void> initializeMqttClient() async {
   if (AppInit.isWeb) {

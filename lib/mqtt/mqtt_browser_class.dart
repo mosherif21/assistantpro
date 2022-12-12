@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mqtt_client/mqtt_browser_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -24,12 +25,6 @@ class MQTTClientBrowserWrapper {
   Future<void> prepareMqttClient() async {
     _setupMqttClient();
     await _connectClient();
-    if (client.connectionStatus?.state == MqttConnectionState.connected) {
-      // _subscribeToTopic('networks');
-      // _publishMessage('Hello');
-    } else {
-      if (kDebugMode) print('client is not connected');
-    }
   }
 
   // waiting for the connection, if an error occurs, print it and disconnect
@@ -61,9 +56,10 @@ class MQTTClientBrowserWrapper {
 
   void _setupMqttClient() {
     // the next 2 lines are necessary to connect with tls, which is used by HiveMQ Cloud
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
     client = MqttBrowserClient.withPort(
         'wss://e5632b826dc54150a9ade8771b6a0db5.s2.eu.hivemq.cloud/mqtt',
-        'flutter client',
+        uid!,
         8884);
     client.keepAlivePeriod = 60;
     client.onDisconnected = _onDisconnected;

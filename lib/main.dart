@@ -1,5 +1,6 @@
 import 'package:assistantpro/src/connectivity/connectivity_controller.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
+import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
 import 'package:assistantpro/src/features/home_page/screens/home_page_screen.dart';
 import 'package:assistantpro/src/features/onboarding/screens/on_boarding_screen.dart';
@@ -25,6 +26,9 @@ void main() async {
   if (internetConnectionStatus == InternetConnectionStatus.connected) {
     await AppInit.initialize();
     Get.put(AuthenticationRepository());
+  }
+  if (AuthenticationRepository.instance.isUserLoggedIn) {
+    await initializeMqttClient();
   }
   runApp(const MyApp());
 }
