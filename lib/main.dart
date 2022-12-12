@@ -23,8 +23,8 @@ void main() async {
   final internetConnectionStatus =
       await InternetConnectionCheckerPlus().connectionStatus;
   if (internetConnectionStatus == InternetConnectionStatus.connected) {
-    await AppInit.initialize()
-        .then((value) => Get.put(AuthenticationRepository()));
+    await AppInit.initialize();
+    Get.put(AuthenticationRepository());
   }
   runApp(const MyApp());
 }

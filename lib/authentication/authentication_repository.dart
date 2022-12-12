@@ -49,6 +49,7 @@ class AuthenticationRepository extends GetxController {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       if (fireUser.value != null) {
+        await initializeMqttClient();
         getToHomePage();
         isUserLoggedIn = true;
         return 'success';
@@ -69,6 +70,7 @@ class AuthenticationRepository extends GetxController {
           verificationCompleted: (credential) async {
             final auth = await _auth.signInWithCredential(credential);
             if (auth.user != null) {
+              await initializeMqttClient();
               getToHomePage();
             }
           },
@@ -127,6 +129,7 @@ class AuthenticationRepository extends GetxController {
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
         if (userCredential.user != null) {
+          await initializeMqttClient();
           getToHomePage();
           return 'success';
         }

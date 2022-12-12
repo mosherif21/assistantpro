@@ -45,6 +45,7 @@ class OtpVerificationController extends GetxController {
         : await verifyOTPEmail(verificationCode);
     hideLoadingScreen();
     if (returnMessage.compareTo('success') == 0) {
+      await initializeMqttClient();
       getToHomePage();
     } else {
       Get.snackbar(

@@ -1,7 +1,6 @@
 import 'package:assistantpro/firebase/firebase_manage_data.dart';
 import 'package:assistantpro/src/common_widgets/regular_bottom_sheet.dart';
 import 'package:assistantpro/src/common_widgets/regular_elevated_button.dart';
-import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/constants/assets_strings.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/home_page/components/no_products_error.dart';
@@ -152,8 +151,7 @@ class HomePageScreen extends StatelessWidget {
                       onPressed: () {
                         for (var product
                             in firebaseDataController.userProducts) {
-                          AppInit.mqttClient.client
-                              .unsubscribe(product.getGetTopic());
+                          mqttClient.client.unsubscribe(product.getGetTopic());
                         }
                         AuthenticationRepository.instance.logoutUser();
                       },

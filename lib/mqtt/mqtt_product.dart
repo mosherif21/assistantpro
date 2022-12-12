@@ -1,14 +1,14 @@
-import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 import '../firebase/firebase_manage_data.dart';
+import '../src/constants/common_functions.dart';
 
 class MQTTProductHandler {
   var countTracker = 0.obs;
   bool subscribed = false;
-  final client = AppInit.mqttClient.client;
+  final client = mqttClient.client;
   int currentSet = 0;
   void subscribeToTopic(
       String topicName, String productId, String productName) {

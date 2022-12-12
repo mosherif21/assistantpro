@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -55,10 +56,9 @@ class MQTTClientServerWrapper {
   }
 
   void _setupMqttClient() {
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
     client = MqttServerClient.withPort(
-        'e5632b826dc54150a9ade8771b6a0db5.s2.eu.hivemq.cloud',
-        'flutter client',
-        8883);
+        'e5632b826dc54150a9ade8771b6a0db5.s2.eu.hivemq.cloud', uid!, 8883);
     // the next 2 lines are necessary to connect with tls, which is used by HiveMQ Cloud
     client.secure = true;
     client.securityContext = SecurityContext.defaultContext;

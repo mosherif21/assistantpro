@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../firebase/firebase_initializations.dart';
 import '../../localization/language/language_functions.dart';
-import '../../mqtt/mqtt_server_class.dart';
 import '../features/onboarding/components/onboarding_shared_preferences.dart';
 import '../routing/splash_screen.dart';
 
@@ -27,8 +26,6 @@ class AppInit {
   static late final Locale setLocale;
   static Language currentDeviceLanguage = Language.english;
   static Transition transition = Transition.leftToRightWithFade;
-  // ignore: prefer_typing_uninitialized_variables
-  static late final mqttClient;
   static Future<void> initializeConstants() async {
     prefs = await SharedPreferences.getInstance();
     isLocaleSet = await getIfLocaleIsSet();
@@ -52,13 +49,6 @@ class AppInit {
     }
     if (defaultTargetPlatform == TargetPlatform.iOS && !isWeb) {
       isIos = true;
-    }
-    if (AppInit.isWeb) {
-      // mqttClient = MQTTClientBrowserWrapper();
-      // await mqttClient.prepareMqttClient();
-    } else {
-      mqttClient = MQTTClientServerWrapper();
-      await mqttClient.prepareMqttClient();
     }
   }
 
