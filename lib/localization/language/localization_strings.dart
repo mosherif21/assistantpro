@@ -94,6 +94,7 @@ class Languages extends Translations {
           'qrCodeEnter': 'اضف عن طريق رمز الاستجابة السريع',
           'addProductId': 'اضف عن طريق كود المنتج',
           'registerDevice': 'اضف جهاز',
+          'editDevice': 'تعديل الجهاز',
         },
         'en_US': {
           'onBoardingTitle1': 'Fast ambulance requests',
@@ -188,6 +189,7 @@ class Languages extends Translations {
           'qrCodeEnter': 'Add using qr code',
           'addProductId': 'Add using product id',
           'registerDevice': 'Register device',
+          'editDevice': 'Edit device',
         },
       };
 }

@@ -11,9 +11,11 @@ class ProductDataForm extends StatelessWidget {
     Key? key,
     required this.productId,
     required this.productName,
+    required this.buttonText,
   }) : super(key: key);
   final String productId;
   final String productName;
+  final String buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +84,7 @@ class ProductDataForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   RegularElevatedButton(
-                    buttonText: 'registerDevice'.tr,
+                    buttonText: buttonText,
                     enabled: true,
                     onPressed: () async {
                       final checkSuccess =

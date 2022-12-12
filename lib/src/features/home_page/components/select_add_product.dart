@@ -37,9 +37,10 @@ class ChooseAddDeviceMethod extends StatelessWidget {
             onPressed: () {
               RegularBottomSheet.hideBottomSheet();
               Get.to(
-                () => const ProductDataForm(
+                () => ProductDataForm(
                   productId: '',
                   productName: '',
+                  buttonText: 'registerDevice'.tr,
                 ),
               );
             },

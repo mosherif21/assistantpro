@@ -1,4 +1,5 @@
 import 'package:assistantpro/src/constants/assets_strings.dart';
+import 'package:assistantpro/src/features/home_page/components/product_data_form.dart';
 import 'package:assistantpro/src/features/home_page/components/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -113,7 +114,15 @@ class Product extends StatelessWidget {
                       size: screenHeight * 0.05,
                     ),
                     color: Colors.black,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(
+                        () => ProductDataForm(
+                          productId: product.getProductId(),
+                          productName: product.getProductName(),
+                          buttonText: 'registerDevice'.tr,
+                        ),
+                      );
+                    },
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.01),
