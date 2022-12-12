@@ -77,6 +77,7 @@ class FireBaseDataAccess extends GetxController {
       String usageName, int minimumQuantity, int currentQuantity) async {
     var productExist = '';
     if (_userUid != null) {
+      removeProduct(productId);
       await dbRef
           .child('products/$productName/$productId')
           .once()
