@@ -49,7 +49,7 @@ class HomePageScreen extends StatelessWidget {
                             fontSize: screenHeight * 0.02),
                       ),
                     ),
-                    SizedBox(width: screenHeight * 0.012),
+                    SizedBox(width: screenHeight * 0.03),
                     Container(
                       margin: EdgeInsets.only(
                           top: screenHeight * 0.027, left: screenHeight * 0.01),

@@ -1,5 +1,6 @@
 import 'package:assistantpro/src/common_widgets/regular_bottom_sheet.dart';
 import 'package:assistantpro/src/features/home_page/components/product_data_form.dart';
+import 'package:assistantpro/src/features/home_page/components/qr_code_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +27,8 @@ class ChooseAddDeviceMethod extends StatelessWidget {
             title: 'qrCode'.tr,
             subTitle: 'qrCodeEnter'.tr,
             iconData: Icons.qr_code_scanner,
-            onPressed: () {},
+            onPressed: () {RegularBottomSheet.hideBottomSheet();
+              Get.to(()=> const QRScannerWidget());},
           ),
           SizedBox(height: screenHeight * 0.02),
           FramedIconButton(

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../mqtt/mqtt_browser_class.dart';
+import '../../mqtt/mqtt_server_class.dart';
 import '../features/home_page/screens/home_page_screen.dart';
 import 'app_init_constants.dart';
 
@@ -17,13 +17,13 @@ double getScreenWidth(BuildContext context) {
 var mqttClient;
 
 Future<void> initializeMqttClient() async {
-  if (AppInit.isWeb) {
-    mqttClient = MQTTClientBrowserWrapper();
-    await mqttClient.prepareMqttClient();
-  } else {
-    // mqttClient = MQTTClientServerWrapper();
-    // await mqttClient.prepareMqttClient();
-  }
+
+    //mqttClient = MQTTClientBrowserWrapper();
+   // await mqttClient.prepareMqttClient();
+
+     mqttClient = MQTTClientServerWrapper();
+     await mqttClient.prepareMqttClient();
+
 }
 
 void getToHomePage() async {
