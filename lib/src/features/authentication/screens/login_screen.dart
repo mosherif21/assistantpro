@@ -10,6 +10,7 @@ import '../../../constants/app_init_constants.dart';
 import '../../../constants/assets_strings.dart';
 import '../../../constants/common_functions.dart';
 import '../components/loginScreen/login_form.dart';
+import '../controllers/login_controller.dart';
 import 'email_register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class LoginScreen extends StatelessWidget {
     final screenWidth = getScreenWidth(context);
     // ConnectivityController connectivityController =
     ConnectivityChecker.checkConnection(true);
-
+    Get.put(LoginController());
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(

@@ -32,7 +32,7 @@ class Product extends StatelessWidget {
             Radius.circular(15),
           ),
         ),
-        child: Row(
+        child: Stack(
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -97,52 +97,55 @@ class Product extends StatelessWidget {
                           ],
                         )
                       ],
-                    )
+                    ),
                   ],
                 )
               ],
             ),
-            SizedBox(width: screenHeight * 0.07),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: IconButton(
+            Positioned(
+              right: 10.0,
+              top: 5.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.settings,
+                        size: screenHeight * 0.05,
+                      ),
+                      color: Colors.black,
+                      onPressed: () {
+                        Get.to(
+                          () => ProductDataForm(
+                            productId: product.getProductId(),
+                            productName: product.getProductName(),
+                            buttonText: 'registerDevice'.tr,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.01),
+                  IconButton(
                     icon: Icon(
-                      Icons.settings,
+                      Icons.close,
                       size: screenHeight * 0.05,
                     ),
                     color: Colors.black,
                     onPressed: () {
-                      Get.to(
-                        () => ProductDataForm(
-                          productId: product.getProductId(),
-                          productName: product.getProductName(),
-                          buttonText: 'registerDevice'.tr,
-                        ),
-                      );
+                      FireBaseDataAccess.instance
+                          .removeProduct(product.getProductId());
+                      product
+                          .getMqttProductHandler()
+                          .cancelSubscription(product.getGetTopic());
                     },
                   ),
-                ),
-                SizedBox(height: screenHeight * 0.01),
-                IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    size: screenHeight * 0.05,
-                  ),
-                  color: Colors.black,
-                  onPressed: () {
-                    FireBaseDataAccess.instance
-                        .removeProduct(product.getProductId());
-                    product
-                        .getMqttProductHandler()
-                        .cancelSubscription(product.getGetTopic());
-                  },
-                ),
-                SizedBox(height: screenHeight * 0.005),
-              ],
-            )
+                  SizedBox(height: screenHeight * 0.005),
+                ],
+              ),
+            ),
           ],
         ),
       ),

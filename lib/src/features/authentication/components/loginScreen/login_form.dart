@@ -17,8 +17,7 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
-
+    final controller = LoginController.instance;
     return Form(
       child: Container(
         padding: const EdgeInsets.all(5),
