@@ -57,7 +57,6 @@ class FireBaseDataAccess extends GetxController {
                           0,
                   mqttProductHandler: MQTTProductHandler(),
                 );
-
                 productsList.add(product);
               }
             }

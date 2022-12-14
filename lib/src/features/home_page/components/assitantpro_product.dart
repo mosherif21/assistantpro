@@ -16,8 +16,6 @@ class Product extends StatelessWidget {
   final double screenHeight;
   @override
   Widget build(BuildContext context) {
-    product.getMqttProductHandler().subscribeToTopic(product.getGetTopic(),
-        product.getProductId(), product.getProductName());
     return Obx(
       () => Container(
         width: double.infinity,
@@ -134,10 +132,10 @@ class Product extends StatelessWidget {
                       size: screenHeight * 0.05,
                     ),
                     color: Colors.black,
-                    onPressed: () {
-                      FireBaseDataAccess.instance
+                    onPressed: () async {
+                      await FireBaseDataAccess.instance
                           .removeProduct(product.getProductId());
-                      product
+                      await product
                           .getMqttProductHandler()
                           .cancelSubscription(product.getGetTopic());
                     },

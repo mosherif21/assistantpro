@@ -10,12 +10,12 @@ class MQTTProductHandler {
   bool subscribed = false;
   final client = mqttClient.client;
   int currentSet = 0;
-  void subscribeToTopic(
-      String topicName, String productId, String productName) {
+  Future<void> subscribeToTopic(
+      String topicName, String productId, String productName) async {
     if (!subscribed) {
       subscribed = true;
       if (kDebugMode) print('Subscribing to the $topicName topic');
-      client.subscribe(topicName, MqttQos.atMostOnce);
+      await client.subscribe(topicName, MqttQos.atMostOnce);
 
       // print the message when it is received
       client.updates?.listen(
@@ -23,7 +23,6 @@ class MQTTProductHandler {
           final MqttPublishMessage recMess = c[0].payload;
           var message =
               MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-
           if (kDebugMode) print('You got a new count');
           if (kDebugMode) print(message);
           countTracker.value = int.parse(message);
@@ -52,8 +51,8 @@ class MQTTProductHandler {
     client.publishMessage(topicName, MqttQos.exactlyOnce, builderPayload!);
   }
 
-  void cancelSubscription(String topicName) {
-    client.unsubscribe(topicName);
+  Future<void> cancelSubscription(String topicName) async {
+    await client.unsubscribe(topicName);
     subscribed = false;
   }
 }
