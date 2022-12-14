@@ -22,8 +22,7 @@ class HomePageScreen extends StatelessWidget {
     ConnectivityChecker.checkConnection(true);
     double screenHeight = getScreenHeight(context);
     final FireBaseDataAccess firebaseDataController =
-        FireBaseDataAccess.instance;
-
+        Get.put(FireBaseDataAccess());
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -156,6 +155,7 @@ class HomePageScreen extends StatelessWidget {
                         }
                         mqttClient.client.disconnect();
                         AuthenticationRepository.instance.logoutUser();
+                        Get.delete<FireBaseDataAccess>();
                       },
                       enabled: true,
                     ),

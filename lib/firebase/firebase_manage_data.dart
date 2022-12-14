@@ -16,12 +16,12 @@ class FireBaseDataAccess extends GetxController {
   late final StreamSubscription productsListener;
 
   @override
-  void onClose() async {
-    await productsListener.cancel();
+  void onClose() {
+    productsListener.cancel();
   }
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
     if (_userUid != null) dbRef = FirebaseDatabase.instance.ref();
     if (_userUid != null) listenForUserProducts();
