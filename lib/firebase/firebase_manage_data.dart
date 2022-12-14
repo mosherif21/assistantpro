@@ -104,6 +104,20 @@ class FireBaseDataAccess extends GetxController {
     return productExist;
   }
 
+  Future<bool> checkProductExist(String productId, String productName) async {
+    var productExist = false;
+    if (_userUid != null) {
+      removeProduct(productId);
+      await dbRef
+          .child('products/$productName/$productId')
+          .once()
+          .then((value) async {
+        if (value.snapshot.exists) productExist = true;
+      });
+    }
+    return productExist;
+  }
+
   Future<void> updateCounterValue(
       String productId, String productName, int currentQuantity) async {
     if (_userUid != null) {

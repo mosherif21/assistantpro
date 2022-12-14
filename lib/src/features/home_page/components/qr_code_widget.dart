@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:assistantpro/firebase/firebase_manage_data.dart';
 import 'package:assistantpro/src/features/home_page/components/product_data_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,6 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                         child: ElevatedButton(
                             onPressed: () async {
                               await controller?.toggleFlash();
-                              setState(() {});
                             },
                             child: FutureBuilder(
                               future: controller?.getFlashStatus(),
@@ -76,7 +76,6 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                         child: ElevatedButton(
                           onPressed: () async {
                             await controller?.flipCamera();
-                            setState(() {});
                           },
                           child: FutureBuilder(
                             future: controller?.getCameraInfo(),
@@ -161,20 +160,24 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
     setState(() {
       this.controller = controller;
     });
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-        data = result!.code as String;
-
-        Get.to(
-          () => ProductDataForm(
-            productId: data.split('/').first,
-            productName: data.split('/').last,
-            buttonText: 'registerDevice'.tr,
-            qrCodeAdd: true,
-          ),
-        );
-      });
+    controller.scannedDataStream.listen((scanData) async {
+      result = scanData;
+      data = result!.code as String;
+      var readCode = data.split('/');
+      if (readCode.length == 2) {
+        if (await FireBaseDataAccess.instance
+            .checkProductExist(readCode[0], readCode[1])) {
+          controller.pauseCamera();
+          Get.to(
+            () => ProductDataForm(
+              productId: data.split('/').first,
+              productName: data.split('/').last,
+              buttonText: 'registerDevice'.tr,
+              qrCodeAdd: true,
+            ),
+          );
+        }
+      }
     });
   }
 
