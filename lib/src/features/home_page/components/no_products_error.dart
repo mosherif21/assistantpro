@@ -20,7 +20,6 @@ class NoProducts extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: screenHeight*0.13,),
             Image(
               image: const AssetImage(kRobotImage),
               height: screenHeight * 0.2,

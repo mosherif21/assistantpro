@@ -4,8 +4,9 @@ import 'dart:io';
 import 'package:assistantpro/src/features/home_page/components/product_data_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:get/get.dart';
+// ignore: depend_on_referenced_packages
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRScannerWidget extends StatefulWidget {
   const QRScannerWidget({Key? key}) : super(key: key);
@@ -44,7 +45,10 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                    const Text('Scan a code',style: TextStyle(fontFamily: 'Bruno Ace'),),
+                  const Text(
+                    'Scan a code',
+                    style: TextStyle(fontFamily: 'Bruno Ace'),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,28 +63,39 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                             child: FutureBuilder(
                               future: controller?.getFlashStatus(),
                               builder: (context, snapshot) {
-                                return Text('Flash: ${snapshot.data}',style: const TextStyle(fontFamily: 'Bruno Ace'),);
+                                return Text(
+                                  'Flash: ${snapshot.data}',
+                                  style:
+                                      const TextStyle(fontFamily: 'Bruno Ace'),
+                                );
                               },
                             )),
                       ),
                       Container(
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.flipCamera();
-                              setState(() {});
+                          onPressed: () async {
+                            await controller?.flipCamera();
+                            setState(() {});
+                          },
+                          child: FutureBuilder(
+                            future: controller?.getCameraInfo(),
+                            builder: (context, snapshot) {
+                              if (snapshot.data != null) {
+                                return Text(
+                                  'Camera facing ${describeEnum(snapshot.data!)}',
+                                  style:
+                                      const TextStyle(fontFamily: 'Bruno Ace'),
+                                );
+                              } else {
+                                return const Text(
+                                  'loading',
+                                  style: TextStyle(fontFamily: 'Bruno Ace'),
+                                );
+                              }
                             },
-                            child: FutureBuilder(
-                              future: controller?.getCameraInfo(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data != null) {
-                                  return Text(
-                                      'Camera facing ${describeEnum(snapshot.data!)}',style: const TextStyle(fontFamily: 'Bruno Ace'),);
-                                } else {
-                                  return const Text('loading',style: TextStyle(fontFamily: 'Bruno Ace'),);
-                                }
-                              },
-                            )),
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -95,7 +110,8 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                             await controller?.pauseCamera();
                           },
                           child: const Text('pause',
-                              style: TextStyle(fontSize: 20,fontFamily: 'Bruno Ace')),
+                              style: TextStyle(
+                                  fontSize: 20, fontFamily: 'Bruno Ace')),
                         ),
                       ),
                       Container(
@@ -105,7 +121,8 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                             await controller?.resumeCamera();
                           },
                           child: const Text('resume',
-                              style: TextStyle(fontSize: 20,fontFamily: 'Bruno Ace')),
+                              style: TextStyle(
+                                  fontSize: 20, fontFamily: 'Bruno Ace')),
                         ),
                       )
                     ],
@@ -147,12 +164,16 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-       data = result!.code as String;
+        data = result!.code as String;
 
-       Get.offAll(() => ProductDataForm(
+        Get.to(
+          () => ProductDataForm(
             productId: data.split('/').first,
             productName: data.split('/').last,
-            buttonText: 'registerDevice'.tr));
+            buttonText: 'registerDevice'.tr,
+            qrCodeAdd: true,
+          ),
+        );
       });
     });
   }
@@ -161,7 +182,11 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission',style: TextStyle(fontFamily: 'Bruno Ace'),)),
+        const SnackBar(
+            content: Text(
+          'no Permission',
+          style: TextStyle(fontFamily: 'Bruno Ace'),
+        )),
       );
     }
   }

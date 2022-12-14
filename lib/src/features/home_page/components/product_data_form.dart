@@ -12,10 +12,12 @@ class ProductDataForm extends StatelessWidget {
     required this.productId,
     required this.productName,
     required this.buttonText,
+    required this.qrCodeAdd,
   }) : super(key: key);
   final String productId;
   final String productName;
   final String buttonText;
+  final bool qrCodeAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,10 @@ class ProductDataForm extends StatelessWidget {
                     onPressed: () async {
                       final checkSuccess =
                           await controller.registerNewProduct();
-                      if (checkSuccess) Get.back();
+                      if (checkSuccess) {
+                        if (qrCodeAdd) Get.back();
+                        Get.back();
+                      }
                     },
                   ),
                 ],

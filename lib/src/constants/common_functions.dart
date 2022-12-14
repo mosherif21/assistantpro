@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../mqtt/mqtt_server_class.dart';
 import '../features/home_page/screens/home_page_screen.dart';
-import 'app_init_constants.dart';
 
 double getScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height;
@@ -17,13 +16,11 @@ double getScreenWidth(BuildContext context) {
 var mqttClient;
 
 Future<void> initializeMqttClient() async {
+  // mqttClient = MQTTClientBrowserWrapper();
+  // await mqttClient.prepareMqttClient();
 
-    //mqttClient = MQTTClientBrowserWrapper();
-   // await mqttClient.prepareMqttClient();
-
-     mqttClient = MQTTClientServerWrapper();
-     await mqttClient.prepareMqttClient();
-
+  mqttClient = MQTTClientServerWrapper();
+  await mqttClient.prepareMqttClient();
 }
 
 void getToHomePage() async {

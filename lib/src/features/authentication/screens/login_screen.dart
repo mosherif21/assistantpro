@@ -1,5 +1,6 @@
 import 'package:assistantpro/src/constants/sizes.dart';
 import 'package:assistantpro/src/features/authentication/components/loginScreen/alternate_login_buttons.dart';
+import 'package:assistantpro/src/features/authentication/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,6 @@ import '../../../constants/app_init_constants.dart';
 import '../../../constants/assets_strings.dart';
 import '../../../constants/common_functions.dart';
 import '../components/loginScreen/login_form.dart';
-import '../controllers/login_controller.dart';
 import 'email_register_screen.dart';
 
 class LoginScreen extends StatelessWidget {

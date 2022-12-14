@@ -27,8 +27,10 @@ class ChooseAddDeviceMethod extends StatelessWidget {
             title: 'qrCode'.tr,
             subTitle: 'qrCodeEnter'.tr,
             iconData: Icons.qr_code_scanner,
-            onPressed: () {RegularBottomSheet.hideBottomSheet();
-              Get.to(()=> const QRScannerWidget());},
+            onPressed: () {
+              RegularBottomSheet.hideBottomSheet();
+              Get.to(() => const QRScannerWidget());
+            },
           ),
           SizedBox(height: screenHeight * 0.02),
           FramedIconButton(
@@ -43,6 +45,7 @@ class ChooseAddDeviceMethod extends StatelessWidget {
                   productId: '',
                   productName: '',
                   buttonText: 'registerDevice'.tr,
+                  qrCodeAdd: false,
                 ),
               );
             },

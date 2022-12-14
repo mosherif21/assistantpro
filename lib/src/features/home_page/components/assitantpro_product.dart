@@ -104,7 +104,6 @@ class Product extends StatelessWidget {
             ),
             Positioned(
               right: 10.0,
-              top: 5.0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -122,6 +121,7 @@ class Product extends StatelessWidget {
                             productId: product.getProductId(),
                             productName: product.getProductName(),
                             buttonText: 'registerDevice'.tr,
+                            qrCodeAdd: false,
                           ),
                         );
                       },
