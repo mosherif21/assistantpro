@@ -19,7 +19,8 @@ class AuthenticationRepository extends GetxController {
   var verificationId = ''.obs;
   GoogleSignIn? googleSignIn;
   @override
-  void onReady() {
+  void onInit() {
+    super.onInit();
     fireUser = Rx<User?>(_auth.currentUser);
     if (fireUser.value != null) {
       isUserLoggedIn = true;
