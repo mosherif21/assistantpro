@@ -36,7 +36,6 @@ class AuthenticationRepository extends GetxController {
       if (fireUser.value != null) {
         await initializeMqttClient();
         getToHomePage();
-        isUserLoggedIn = true;
         return 'success';
       }
     } on FirebaseAuthException catch (e) {
@@ -54,7 +53,6 @@ class AuthenticationRepository extends GetxController {
       if (fireUser.value != null) {
         await initializeMqttClient();
         getToHomePage();
-        isUserLoggedIn = true;
         return 'success';
       }
     } on FirebaseAuthException catch (e) {
