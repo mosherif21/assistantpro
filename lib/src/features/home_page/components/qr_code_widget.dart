@@ -174,6 +174,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                 productName: data.split('/').last,
                 buttonText: 'registerDevice'.tr,
                 qrCodeAdd: true,
+                getTopic: '',
               ));
         }
       }

@@ -126,6 +126,7 @@ class Product extends StatelessWidget {
                             productName: product.getProductName(),
                             buttonText: 'registerDevice'.tr,
                             qrCodeAdd: false,
+                            getTopic: product.getGetTopic(),
                           ),
                         );
                       },

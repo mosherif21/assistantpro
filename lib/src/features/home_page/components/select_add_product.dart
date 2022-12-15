@@ -46,6 +46,7 @@ class ChooseAddDeviceMethod extends StatelessWidget {
                   productName: '',
                   buttonText: 'registerDevice'.tr,
                   qrCodeAdd: false,
+                  getTopic: '',
                 ),
               );
             },
