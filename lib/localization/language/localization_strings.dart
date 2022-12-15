@@ -88,7 +88,7 @@ class Languages extends Translations {
           'currentQuantity': 'الكمية الحالية',
           'enterCurrentQuantity': 'ادخل الكمية الحالية',
           'usageName': 'اسم الاستخدام',
-          'enterUsageName': 'اخل اسم الاستخدام',
+          'enterUsageName': 'ادخل اسم الاستخدام',
           'chooseAddProduct': 'اختر طريقة لاضافة المنتج',
           'qrCode': 'رمز الاستجابة السريع',
           'qrCodeEnter': 'اضف عن طريق رمز الاستجابة السريع',
