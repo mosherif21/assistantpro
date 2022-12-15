@@ -38,7 +38,6 @@ class MQTTClientBrowserWrapper {
       connectionState = MqttCurrentConnectionState.errorWhenConnecting;
       client.disconnect();
     }
-
     // when connected, print a confirmation, else print an error
     if (client.connectionStatus?.state == MqttConnectionState.connected) {
       connectionState = MqttCurrentConnectionState.connected;
