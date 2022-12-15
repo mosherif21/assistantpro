@@ -1,13 +1,13 @@
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:assistantpro/firebase/firebase_manage_data.dart';
 import 'package:assistantpro/src/features/home_page/components/product_data_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import '../../../../firebase/firebase_manage_data.dart';
 
 class QRScannerWidget extends StatefulWidget {
   const QRScannerWidget({Key? key}) : super(key: key);
@@ -24,14 +24,14 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid || Platform.isIOS) {
-      controller!.pauseCamera();
-    }
-    controller!.resumeCamera();
-  }
+  // @override
+  // void reassemble() {
+  //   super.reassemble();
+  //   if (AppInit.isAndroid || AppInit.isIos || AppInit.isWeb) {
+  //     controller!.pauseCamera();
+  //   }
+  //   controller!.resumeCamera();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -163,19 +163,18 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
     controller.scannedDataStream.listen((scanData) async {
       result = scanData;
       data = result!.code as String;
+      if (kDebugMode) print('scanned $data');
       var readCode = data.split('/');
       if (readCode.length == 2) {
         if (await FireBaseDataAccess.instance
             .checkProductExist(readCode[0], readCode[1])) {
-          controller.pauseCamera();
-          Get.to(
-            () => ProductDataForm(
-              productId: data.split('/').first,
-              productName: data.split('/').last,
-              buttonText: 'registerDevice'.tr,
-              qrCodeAdd: true,
-            ),
-          );
+          controller.dispose();
+          Get.to(() => ProductDataForm(
+                productId: data.split('/').first,
+                productName: data.split('/').last,
+                buttonText: 'registerDevice'.tr,
+                qrCodeAdd: true,
+              ));
         }
       }
     });

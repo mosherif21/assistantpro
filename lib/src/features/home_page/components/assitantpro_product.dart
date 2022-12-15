@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../firebase/firebase_manage_data.dart';
+import '../../../constants/app_init_constants.dart';
 
 class Product extends StatelessWidget {
   const Product({
@@ -101,7 +102,12 @@ class Product extends StatelessWidget {
               ],
             ),
             Positioned(
-              right: 10.0,
+              right: AppInit.currentDeviceLanguage == Language.english
+                  ? 10.0
+                  : null,
+              left: AppInit.currentDeviceLanguage == Language.arabic
+                  ? 10.0
+                  : null,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
