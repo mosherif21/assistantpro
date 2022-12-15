@@ -15,8 +15,9 @@ class MQTTProductHandler {
     if (!subscribed) {
       subscribed = true;
       if (kDebugMode) print('Subscribing to the $topicName topic');
-      if (client.getSubscriptionsStatus(topicName) ==
-          MqttSubscriptionStatus.doesNotExist) {
+      var subStatus = client.getSubscriptionsStatus(topicName);
+      if (subStatus != MqttSubscriptionStatus.active ||
+          subStatus != MqttSubscriptionStatus.pending) {
         await client.subscribe(topicName, MqttQos.atMostOnce);
       }
 
