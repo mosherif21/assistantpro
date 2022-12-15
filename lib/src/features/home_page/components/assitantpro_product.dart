@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import '../../../../firebase/firebase_manage_data.dart';
 import '../../../constants/app_init_constants.dart';
 
-class Product extends StatelessWidget {
-  const Product({
+class ProductWidget extends StatelessWidget {
+  const ProductWidget({
     Key? key,
     required this.screenHeight,
     required this.product,
@@ -132,7 +132,7 @@ class Product extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.01),
+                  SizedBox(height: screenHeight * 0.005),
                   IconButton(
                     icon: Icon(
                       Icons.close,

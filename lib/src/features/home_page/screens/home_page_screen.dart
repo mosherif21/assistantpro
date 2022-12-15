@@ -121,7 +121,7 @@ class HomePageScreen extends StatelessWidget {
                                     children: [
                                       for (var product in firebaseDataController
                                           .userProducts)
-                                        Product(
+                                        ProductWidget(
                                           screenHeight: screenHeight,
                                           product: product,
                                         )
