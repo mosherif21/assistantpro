@@ -1,6 +1,7 @@
 import 'package:assistantpro/firebase/firebase_manage_data.dart';
 import 'package:assistantpro/src/common_widgets/regular_bottom_sheet.dart';
 import 'package:assistantpro/src/common_widgets/regular_elevated_button.dart';
+import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/constants/assets_strings.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/home_page/components/no_products_error.dart';
@@ -148,14 +149,19 @@ class HomePageScreen extends StatelessWidget {
                     const SizedBox(height: 5.0),
                     RegularElevatedButton(
                       buttonText: 'logout'.tr,
-                      onPressed: () {
+                      onPressed: () async {
                         for (var product
                             in firebaseDataController.userProducts) {
-                          mqttClient.client.unsubscribe(product.getGetTopic());
+                          await mqttClient.client
+                              .unsubscribe(product.getGetTopic());
                         }
                         mqttClient.client.disconnect();
-                        AuthenticationRepository.instance.logoutUser();
-                        Get.delete<FireBaseDataAccess>();
+                        if (!AppInit.isWeb) {
+                          await FireBaseDataAccess.instance
+                              .onLogoutDeleteTokens();
+                        }
+                        await Get.delete<FireBaseDataAccess>();
+                        await AuthenticationRepository.instance.logoutUser();
                       },
                       enabled: true,
                     ),

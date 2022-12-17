@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:assistantpro/mqtt/mqtt_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../src/constants/app_init_constants.dart';
 import '../src/features/home_page/components/product_model.dart';
 
 class FireBaseDataAccess extends GetxController {
@@ -28,7 +28,7 @@ class FireBaseDataAccess extends GetxController {
     if (_userUid != null) listenForUserProducts();
   }
 
-  void listenForUserProducts() {
+  void listenForUserProducts() async {
     if (_userUid != null) {
       productsListener =
           dbRef.child('users/$_userUid/registeredDevices').onValue.listen(
@@ -58,7 +58,12 @@ class FireBaseDataAccess extends GetxController {
                           0,
                   mqttProductHandler: MQTTProductHandler(),
                 );
+
                 productsList.add(product);
+                if (!AppInit.isWeb) {
+                  FireBaseDataAccess.instance
+                      .setNotificationToken(productId!, productName.toString());
+                }
               }
             }
             userProducts.value = productsList;
@@ -118,14 +123,12 @@ class FireBaseDataAccess extends GetxController {
     return productExist;
   }
 
-  Future<void> setNotificationToken(
-      String productId, String productName) async {
+  void setNotificationToken(String productId, String productName) {
     if (_userUid != null) {
-      final token = await FirebaseMessaging.instance.getToken();
-      await dbRef
+      dbRef
           .child(
-              'products/$productName/$productId/notificationTokens/$_userUid}')
-          .set(token);
+              'products/$productName/$productId/notificationTokens/$_userUid')
+          .set(AppInit.token);
     }
   }
 
@@ -136,8 +139,28 @@ class FireBaseDataAccess extends GetxController {
           .set(null);
       await dbRef
           .child(
-              'products/$productName/$productId/notificationTokens/$_userUid}')
+              'products/$productName/$productId/notificationTokens/$_userUid')
           .set(null);
+    }
+  }
+
+  Future<void> onLogoutDeleteTokens() async {
+    if (_userUid != null) {
+      dbRef.child('users/$_userUid/registeredDevices').once().then(
+        (value) async {
+          final snapShot = value.snapshot;
+          if (snapShot.exists) {
+            for (var product in snapShot.children) {
+              final productId = product.key;
+              final productName = product.value;
+              await dbRef
+                  .child(
+                      'products/$productName/$productId/notificationTokens/$_userUid')
+                  .set(null);
+            }
+          }
+        },
+      );
     }
   }
 }

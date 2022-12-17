@@ -34,6 +34,7 @@ void main() async {
   if (AuthenticationRepository.instance.isUserLoggedIn) {
     await initializeMqttClient();
   }
+
   if (!AppInit.isWeb) {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {

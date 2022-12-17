@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,8 @@ class AppInit {
   static late final Locale setLocale;
   static Language currentDeviceLanguage = Language.english;
   static Transition transition = Transition.leftToRightWithFade;
+  // ignore: prefer_typing_uninitialized_variables
+  static late final token;
   static Future<void> initializeConstants() async {
     if (!isConstantsInitialised) {
       prefs = await SharedPreferences.getInstance();
@@ -71,6 +74,9 @@ class AppInit {
         if (kDebugMode) print('ios app check initialized');
       }
       if (kDebugMode) print('Firebase initialized');
+      if (!isWeb) {
+        token = await FirebaseMessaging.instance.getToken();
+      }
       isInitialised = true;
       removeSplashScreen();
     }

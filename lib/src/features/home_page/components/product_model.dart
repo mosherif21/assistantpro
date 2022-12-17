@@ -1,5 +1,3 @@
-import 'package:assistantpro/firebase/firebase_manage_data.dart';
-
 import '../../../../mqtt/mqtt_product.dart';
 
 class AssistantProProduct {
@@ -36,7 +34,6 @@ class AssistantProProduct {
     _mqttProductHandler.setCurrentQuantity(
         currentQuantity.toString(), _setTopic);
     _mqttProductHandler.subscribeToTopic(_getTopic, _productId, _productName);
-    FireBaseDataAccess.instance.setNotificationToken(_productId, _productName);
   }
   String getProductName() {
     return _productName;
