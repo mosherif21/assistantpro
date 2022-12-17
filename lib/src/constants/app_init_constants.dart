@@ -21,34 +21,38 @@ class AppInit {
   static bool isIos = false;
   static bool webMobile = false;
   static bool isInitialised = false;
+  static bool isConstantsInitialised = false;
   static late SharedPreferences prefs;
   static bool isLocaleSet = false;
   static late final Locale setLocale;
   static Language currentDeviceLanguage = Language.english;
   static Transition transition = Transition.leftToRightWithFade;
   static Future<void> initializeConstants() async {
-    prefs = await SharedPreferences.getInstance();
-    isLocaleSet = await getIfLocaleIsSet();
-    showOnBoard = await getShowOnBoarding();
-    if (isLocaleSet) {
-      setLocale = await getLocale();
-    } else {
-      setLocale = Get.deviceLocale ?? const Locale('en', 'US');
-    }
-    isWeb = kIsWeb;
-    notWebMobile = isWeb &&
-        !(defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.android);
+    if (!isConstantsInitialised) {
+      prefs = await SharedPreferences.getInstance();
+      isLocaleSet = await getIfLocaleIsSet();
+      showOnBoard = await getShowOnBoarding();
+      if (isLocaleSet) {
+        setLocale = await getLocale();
+      } else {
+        setLocale = Get.deviceLocale ?? const Locale('en', 'US');
+      }
+      isWeb = kIsWeb;
+      notWebMobile = isWeb &&
+          !(defaultTargetPlatform == TargetPlatform.iOS ||
+              defaultTargetPlatform == TargetPlatform.android);
 
-    webMobile = isWeb &&
-        (defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.android);
+      webMobile = isWeb &&
+          (defaultTargetPlatform == TargetPlatform.iOS ||
+              defaultTargetPlatform == TargetPlatform.android);
 
-    if (defaultTargetPlatform == TargetPlatform.android && !isWeb) {
-      isAndroid = true;
-    }
-    if (defaultTargetPlatform == TargetPlatform.iOS && !isWeb) {
-      isIos = true;
+      if (defaultTargetPlatform == TargetPlatform.android && !isWeb) {
+        isAndroid = true;
+      }
+      if (defaultTargetPlatform == TargetPlatform.iOS && !isWeb) {
+        isIos = true;
+      }
+      isConstantsInitialised = true;
     }
   }
 

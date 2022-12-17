@@ -29,12 +29,19 @@ exports.Notifications = functions.database
                             "Your "+usageName+" tray contains only "+count;
                         }
                         const pay = {
-                          data: {
+                          notification: {
                             title: "Refrigerator Tray ALERT",
                             body: notificationBody,
+                            click_action: "MAIN",
                             badge: "1",
                             sound: "default",
                           },
+                          data: {
+                            body: notificationBody,
+                          },
+                        };
+                        const options = {
+                          priority: "high",
                         };
                         db.ref(tokenSnapshot)
                             .once("value", (tokenSnapshot) => {
@@ -45,7 +52,7 @@ exports.Notifications = functions.database
                                   tokens.push(childSnapshot.val());
                                 });
                                 admin.messaging()
-                                    .sendToDevice(tokens, pay)
+                                    .sendToDevice(tokens, pay, options)
                                     .then((response)=> {
                                       console
                                           .info("Successfully sent");
