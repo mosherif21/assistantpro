@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:assistantpro/mqtt/mqtt_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
@@ -76,7 +77,7 @@ class FireBaseDataAccess extends GetxController {
       String usageName, int minimumQuantity, int currentQuantity) async {
     var productExist = '';
     if (_userUid != null) {
-      removeProduct(productId);
+      removeProduct(productId, productName);
       await dbRef
           .child('products/$productName/$productId')
           .once()
@@ -94,6 +95,7 @@ class FireBaseDataAccess extends GetxController {
           await dbRef
               .child('users/$_userUid/registeredDevices/$productId')
               .set(productName);
+          await setNotificationToken(productId, productName);
           productExist = 'success';
         } else {
           productExist = 'Product doesn\'t exist';
@@ -106,7 +108,7 @@ class FireBaseDataAccess extends GetxController {
   Future<bool> checkProductExist(String productId, String productName) async {
     var productExist = false;
     if (_userUid != null) {
-      removeProduct(productId);
+      removeProduct(productId, productName);
       await dbRef
           .child('products/$productName/$productId')
           .once()
@@ -117,10 +119,25 @@ class FireBaseDataAccess extends GetxController {
     return productExist;
   }
 
-  Future<void> removeProduct(String productId) async {
+  Future<void> setNotificationToken(
+      String productId, String productName) async {
+    if (_userUid != null) {
+      final token = await FirebaseMessaging.instance.getToken();
+      await dbRef
+          .child(
+              'products/$productName/$productId/notificationTokens/$_userUid}')
+          .set(token);
+    }
+  }
+
+  Future<void> removeProduct(String productId, String productName) async {
     if (_userUid != null) {
       await dbRef
           .child('users/$_userUid/registeredDevices/$productId')
+          .set(null);
+      await dbRef
+          .child(
+              'products/$productName/$productId/notificationTokens/$_userUid}')
           .set(null);
     }
   }

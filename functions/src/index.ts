@@ -32,7 +32,7 @@ exports.Notifications = functions.database
                             if (tokenSnapshot.exists()) {
                               tokenSnapshot.forEach((childSnapshot) => {
                                 const token = Object.keys(childSnapshot.val());
-                                admin.messaging().sendToDevice(token, payload);
+                                return admin.messaging().sendToDevice(token, payload);
                               });
                             }
                           });

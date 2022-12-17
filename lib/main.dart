@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:assistantpro/src/connectivity/connectivity_controller.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
@@ -6,6 +8,8 @@ import 'package:assistantpro/src/features/home_page/screens/home_page_screen.dar
 import 'package:assistantpro/src/features/onboarding/screens/on_boarding_screen.dart';
 import 'package:assistantpro/src/routing/splash_screen.dart';
 import 'package:assistantpro/src/utils/theme/theme.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_frame/flutter_web_frame.dart';
@@ -18,7 +22,6 @@ import 'localization/language/localization_strings.dart';
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
   await AppInit.initializeConstants();
   Get.put(ConnectivityController());
   final internetConnectionStatus =
@@ -30,7 +33,22 @@ void main() async {
   if (AuthenticationRepository.instance.isUserLoggedIn) {
     await initializeMqttClient();
   }
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await AppInit.initializeConstants();
+  await AppInit.initialize();
+  await AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: Random().nextInt(1000000),
+      channelKey: 'assistantpro-key',
+      title: message.data['title'],
+      body: message.data['body'],
+      notificationLayout: NotificationLayout.Default,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

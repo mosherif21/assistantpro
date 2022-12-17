@@ -140,8 +140,8 @@ class ProductWidget extends StatelessWidget {
                     ),
                     color: Colors.black,
                     onPressed: () async {
-                      await FireBaseDataAccess.instance
-                          .removeProduct(product.getProductId());
+                      await FireBaseDataAccess.instance.removeProduct(
+                          product.getProductId(), product.getProductName());
                       await product
                           .getMqttProductHandler()
                           .cancelSubscription(product.getGetTopic());

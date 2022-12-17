@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/features/home_page/components/product_data_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -168,6 +169,9 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
       if (readCode.length == 2) {
         if (await FireBaseDataAccess.instance
             .checkProductExist(readCode[0], readCode[1])) {
+          if (!AppInit.isWeb) {
+            controller.pauseCamera();
+          }
           controller.dispose();
           Get.to(() => ProductDataForm(
                 productId: data.split('/').first,
