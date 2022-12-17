@@ -32,9 +32,6 @@ exports.Notifications = functions.database
                           notification: {
                             title: "Refrigerator Tray ALERT",
                             body: notificationBody,
-                            click_action: "MAIN",
-                            badge: "1",
-                            sound: "default",
                           },
                           data: {
                             body: notificationBody,

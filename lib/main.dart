@@ -20,59 +20,6 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'authentication/authentication_repository.dart';
 import 'localization/language/localization_strings.dart';
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  if (kDebugMode) {
-    print("Handling a background message: ${message.notification?.title}");
-  }
-}
-
-Future<void> _createNotifications(RemoteNotification message, int id) async {
-  await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-    id: id,
-    channelKey: 'assistantpro',
-    title: message.title,
-    body: message.body,
-  ));
-}
-
-Future<void> _initializeMessaging() async {
-  if (await AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-        channelKey: 'assistantpro',
-        channelName: 'assistantpro notifications',
-        channelDescription: 'Notification channel for assistantpro',
-        defaultColor: Colors.black,
-        ledColor: Colors.white)
-  ])) {
-    if (kDebugMode) print('awesome initialized');
-  }
-  final messaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-  await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-    if (!isAllowed) {
-      AwesomeNotifications().requestPermissionToSendNotifications();
-    }
-  });
-  if (kDebugMode) {
-    print('User granted permission: ${settings.authorizationStatus}');
-  }
-}
-
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -128,5 +75,58 @@ class MyApp extends StatelessWidget {
       enabled: AppInit.notWebMobile,
       backgroundColor: Colors.white,
     );
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (kDebugMode) {
+    print("Handling a background message: ${message.notification?.title}");
+  }
+}
+
+Future<void> _createNotifications(RemoteNotification message, int id) async {
+  await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+    id: id,
+    channelKey: 'assistantpro',
+    title: message.title,
+    body: message.body,
+  ));
+}
+
+Future<void> _initializeMessaging() async {
+  if (await AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        channelKey: 'assistantpro',
+        channelName: 'assistantpro notifications',
+        channelDescription: 'Notification channel for assistantpro',
+        defaultColor: Colors.black,
+        ledColor: Colors.white)
+  ])) {
+    if (kDebugMode) print('awesome initialized');
+  }
+  final messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  });
+  if (kDebugMode) {
+    print('User granted permission: ${settings.authorizationStatus}');
   }
 }
