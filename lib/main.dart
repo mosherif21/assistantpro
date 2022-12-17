@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:assistantpro/src/connectivity/connectivity_controller.dart';
 import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
@@ -10,6 +8,7 @@ import 'package:assistantpro/src/routing/splash_screen.dart';
 import 'package:assistantpro/src/utils/theme/theme.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_frame/flutter_web_frame.dart';
@@ -18,6 +17,14 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 
 import 'authentication/authentication_repository.dart';
 import 'localization/language/localization_strings.dart';
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (kDebugMode) {
+    print("Handling a background message: ${message.data['title']}");
+  }
+  AwesomeNotifications().createNotificationFromJsonData(message.data);
+}
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -33,22 +40,43 @@ void main() async {
   if (AuthenticationRepository.instance.isUserLoggedIn) {
     await initializeMqttClient();
   }
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(const MyApp());
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await AppInit.initializeConstants();
-  await AppInit.initialize();
-  await AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: Random().nextInt(1000000),
-      channelKey: 'assistantpro-key',
-      title: message.data['title'],
-      body: message.data['body'],
-      notificationLayout: NotificationLayout.Default,
-    ),
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        channelKey: 'assistantpro',
+        channelName: 'assistantpro notifications',
+        channelDescription: 'Notification channel for assistantpro',
+        defaultColor: Colors.black,
+        ledColor: Colors.white)
+  ]);
+  final messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
   );
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  if (kDebugMode) {
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    if (kDebugMode) {
+      print("Handling a foreground message: ${message.data['title']}");
+    }
+    AwesomeNotifications().createNotificationFromJsonData(message.data);
+  });
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
