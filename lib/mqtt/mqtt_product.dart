@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
-import '../firebase/firebase_manage_data.dart';
 import '../src/constants/common_functions.dart';
 
 class MQTTProductHandler {
@@ -30,8 +29,6 @@ class MQTTProductHandler {
           if (kDebugMode) print('You got a new count');
           if (kDebugMode) print(message);
           countTracker.value = int.parse(message);
-          FireBaseDataAccess.instance
-              .updateCounterValue(productId, productName, countTracker.value);
         },
       );
     }
