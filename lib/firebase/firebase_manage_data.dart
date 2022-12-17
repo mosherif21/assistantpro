@@ -95,7 +95,6 @@ class FireBaseDataAccess extends GetxController {
           await dbRef
               .child('users/$_userUid/registeredDevices/$productId')
               .set(productName);
-          await setNotificationToken(productId, productName);
           productExist = 'success';
         } else {
           productExist = 'Product doesn\'t exist';

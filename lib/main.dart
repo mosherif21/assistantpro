@@ -23,7 +23,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (kDebugMode) {
     print("Handling a background message: ${message.data['title']}");
   }
-  AwesomeNotifications().createNotificationFromJsonData(message.data);
+  await AwesomeNotifications().createNotificationFromJsonData(message.data);
 }
 
 void main() async {
@@ -40,14 +40,16 @@ void main() async {
   if (AuthenticationRepository.instance.isUserLoggedIn) {
     await initializeMqttClient();
   }
-  AwesomeNotifications().initialize(null, [
+  if (await AwesomeNotifications().initialize(null, [
     NotificationChannel(
         channelKey: 'assistantpro',
         channelName: 'assistantpro notifications',
         channelDescription: 'Notification channel for assistantpro',
         defaultColor: Colors.black,
         ledColor: Colors.white)
-  ]);
+  ])) {
+    if (kDebugMode) print('awesome initialized');
+  }
   final messaging = FirebaseMessaging.instance;
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -69,11 +71,22 @@ void main() async {
   }
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     if (kDebugMode) {
-      print("Handling a foreground message: ${message.data['title']}");
+      print("Handling a foreground message: ${message.data}");
     }
-    AwesomeNotifications().createNotificationFromJsonData(message.data);
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+      id: 10,
+      channelKey: 'assistantpro',
+      title: message.data['title'],
+      body: message.data['body'],
+    ));
   });
 
   runApp(const MyApp());

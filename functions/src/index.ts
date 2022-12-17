@@ -5,8 +5,6 @@ admin.initializeApp();
 const db = admin.database();
 const tokenSnapshot=
   "products/refrigeratorTray1000/d8bfc0ff35c9/notificationTokens";
-
-
 exports.Notifications = functions.database
     .ref("products/refrigeratorTray1000/d8bfc0ff35c9/currentQuantity")
     .onUpdate((snap) => {
@@ -22,10 +20,16 @@ exports.Notifications = functions.database
                     .once("value", (usageSnapshot) => {
                       if (usageSnapshot.exists()) {
                         const usageName = usageSnapshot.val();
-                        const notificationBody: string =
-                          "Your "+usageName+"tray contains only "+count;
-                        const pay: admin.messaging.MessagingPayload = {
-                          notification: {
+                        let notificationBody ="";
+                        if (count==0) {
+                          notificationBody =
+                            "Your "+usageName+" tray is empty";
+                        } else {
+                          notificationBody =
+                            "Your "+usageName+" tray contains only "+count;
+                        }
+                        const pay = {
+                          data: {
                             title: "Refrigerator Tray ALERT",
                             body: notificationBody,
                             badge: "1",
@@ -35,17 +39,19 @@ exports.Notifications = functions.database
                         db.ref(tokenSnapshot)
                             .once("value", (tokenSnapshot) => {
                               if (tokenSnapshot.exists()) {
+                                const tokens:Array<string>=[];
                                 tokenSnapshot.forEach((childSnapshot) => {
                                   console.log(childSnapshot.val());
-                                  admin.messaging()
-                                      .sendToDevice(childSnapshot.val(), pay)
-                                      .then((response)=> {
-                                        console
-                                            .info("Successfully sent");
-                                      }).catch(function(error) {
-                                        console.warn("Error", error);
-                                      });
+                                  tokens.push(childSnapshot.val());
                                 });
+                                admin.messaging()
+                                    .sendToDevice(tokens, pay)
+                                    .then((response)=> {
+                                      console
+                                          .info("Successfully sent");
+                                    }).catch(function(error) {
+                                      console.warn("Error", error);
+                                    });
                               }
                             });
                       }
