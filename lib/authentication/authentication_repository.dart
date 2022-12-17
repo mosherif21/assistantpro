@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../firebase/firebase_manage_data.dart';
 import 'exception_errors/signin_email_password_exceptions.dart';
 import 'exception_errors/signup_email_password_exceptions.dart';
 
@@ -159,5 +160,6 @@ class AuthenticationRepository extends GetxController {
     await Get.offAll(() => const LoginScreen());
     await _auth.signOut();
     await googleSignIn?.signOut();
+    await Get.delete<FireBaseDataAccess>();
   }
 }

@@ -29,7 +29,6 @@ void main() async {
       await InternetConnectionCheckerPlus().connectionStatus;
   if (internetConnectionStatus == InternetConnectionStatus.connected) {
     await AppInit.initialize();
-    Get.put(AuthenticationRepository());
   }
   if (AuthenticationRepository.instance.isUserLoggedIn) {
     await initializeMqttClient();

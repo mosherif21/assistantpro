@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../authentication/authentication_repository.dart';
 import '../../firebase/firebase_initializations.dart';
 import '../../localization/language/language_functions.dart';
 import '../features/onboarding/components/onboarding_shared_preferences.dart';
@@ -77,6 +78,7 @@ class AppInit {
       if (!isWeb) {
         token = await FirebaseMessaging.instance.getToken();
       }
+      Get.put(AuthenticationRepository());
       isInitialised = true;
       removeSplashScreen();
     }

@@ -155,12 +155,11 @@ class HomePageScreen extends StatelessWidget {
                           await mqttClient.client
                               .unsubscribe(product.getGetTopic());
                         }
-                        mqttClient.client.disconnect();
+                        await mqttClient.client.disconnect();
                         if (!AppInit.isWeb) {
                           await FireBaseDataAccess.instance
                               .onLogoutDeleteTokens();
                         }
-                        await Get.delete<FireBaseDataAccess>();
                         await AuthenticationRepository.instance.logoutUser();
                       },
                       enabled: true,
