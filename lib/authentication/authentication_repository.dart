@@ -155,7 +155,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> logoutUser() async {
-    await FirebaseAuth.instance.signOut();
     await googleSignIn?.signOut();
+    await _auth.signOut();
   }
 }

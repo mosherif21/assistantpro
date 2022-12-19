@@ -1,7 +1,6 @@
 import 'package:assistantpro/firebase/firebase_manage_data.dart';
 import 'package:assistantpro/src/common_widgets/regular_bottom_sheet.dart';
 import 'package:assistantpro/src/common_widgets/regular_elevated_button.dart';
-import 'package:assistantpro/src/constants/app_init_constants.dart';
 import 'package:assistantpro/src/constants/assets_strings.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:assistantpro/src/features/home_page/components/no_products_error.dart';
@@ -157,13 +156,18 @@ class HomePageScreen extends StatelessWidget {
                               .unsubscribe(product.getGetTopic());
                         }
                         await mqttClient.client.disconnect();
-                        if (!AppInit.isWeb) {
-                          await FireBaseDataAccess.instance
-                              .onLogoutDeleteTokens();
-                        }
-                        await Get.delete<FireBaseDataAccess>();
-                        await AuthenticationRepository.instance.logoutUser();
-                        await Get.offAll(() => const LoginScreen());
+                        await FireBaseDataAccess.instance
+                            .onLogoutDeleteTokens()
+                            .then((value) async {
+                          await AuthenticationRepository.instance
+                              .logoutUser()
+                              .then(
+                            (value) {
+                              Get.offAll(() => const LoginScreen());
+                              Get.delete<FireBaseDataAccess>();
+                            },
+                          );
+                        });
                       },
                       enabled: true,
                     ),
