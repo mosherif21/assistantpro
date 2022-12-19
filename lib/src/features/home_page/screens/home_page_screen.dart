@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import '../../../../authentication/authentication_repository.dart';
 import '../../../common_widgets/language_select.dart';
 import '../../../connectivity/connectivity.dart';
+import '../../authentication/screens/login_screen.dart';
 import '../../onboarding/components/onboarding_shared_preferences.dart';
 import '../components/assitantpro_product.dart';
 import '../components/select_add_product.dart';
@@ -160,7 +161,9 @@ class HomePageScreen extends StatelessWidget {
                           await FireBaseDataAccess.instance
                               .onLogoutDeleteTokens();
                         }
+                        await Get.delete<FireBaseDataAccess>();
                         await AuthenticationRepository.instance.logoutUser();
+                        await Get.offAll(() => const LoginScreen());
                       },
                       enabled: true,
                     ),

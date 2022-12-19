@@ -1,12 +1,10 @@
 import 'package:assistantpro/authentication/exception_errors/password_reset_exceptions.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
-import 'package:assistantpro/src/features/authentication/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../firebase/firebase_manage_data.dart';
 import 'exception_errors/signin_email_password_exceptions.dart';
 import 'exception_errors/signup_email_password_exceptions.dart';
 
@@ -157,9 +155,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> logoutUser() async {
-    await Get.offAll(() => const LoginScreen());
-    await _auth.signOut();
+    await FirebaseAuth.instance.signOut();
     await googleSignIn?.signOut();
-    await Get.delete<FireBaseDataAccess>();
   }
 }
