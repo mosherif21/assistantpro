@@ -24,8 +24,10 @@ class FireBaseDataAccess extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (_userUid != null) dbRef = FirebaseDatabase.instance.ref();
-    if (_userUid != null) listenForUserProducts();
+    if (_userUid != null) {
+      dbRef = FirebaseDatabase.instance.ref();
+      listenForUserProducts();
+    }
   }
 
   void listenForUserProducts() async {
@@ -52,7 +54,8 @@ class FireBaseDataAccess extends GetxController {
                   usageName: productMap['usage'],
                   productId: productId.toString(),
                   minimumQuantity:
-                      int.parse(productMap['minQuantity'].toString()),
+                      int.tryParse(productMap['currentQuantity'].toString()) ??
+                          0,
                   currentQuantity:
                       int.tryParse(productMap['currentQuantity'].toString()) ??
                           0,
@@ -70,7 +73,7 @@ class FireBaseDataAccess extends GetxController {
           } else {
             userProducts.value = [];
             if (kDebugMode) {
-              print('no of user registered products: ${userProducts.length}');
+              print('user have no registered devices');
             }
           }
         },
@@ -145,22 +148,24 @@ class FireBaseDataAccess extends GetxController {
   }
 
   Future<void> onLogoutDeleteTokens() async {
-    if (_userUid != null) {
-      dbRef.child('users/$_userUid/registeredDevices').once().then(
-        (value) async {
-          final snapShot = value.snapshot;
-          if (snapShot.exists) {
-            for (var product in snapShot.children) {
-              final productId = product.key;
-              final productName = product.value;
-              await dbRef
-                  .child(
-                      'products/$productName/$productId/notificationTokens/$_userUid')
-                  .set(null);
+    if (!AppInit.isWeb) {
+      if (_userUid != null) {
+        dbRef.child('users/$_userUid/registeredDevices').once().then(
+          (value) async {
+            final snapShot = value.snapshot;
+            if (snapShot.exists) {
+              for (var product in snapShot.children) {
+                final productId = product.key;
+                final productName = product.value;
+                await dbRef
+                    .child(
+                        'products/$productName/$productId/notificationTokens/$_userUid')
+                    .set(null);
+              }
             }
-          }
-        },
-      );
+          },
+        );
+      }
     }
   }
 }
