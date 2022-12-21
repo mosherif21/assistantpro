@@ -5,7 +5,7 @@ import 'package:mqtt_client/mqtt_client.dart';
 import '../src/constants/common_functions.dart';
 
 class MQTTProductHandler {
-  var countTracker = 0.obs;
+  RxInt countTracker = 0.obs;
   bool subscribed = false;
   final client = mqttClient.client;
   int currentSet = 0;
