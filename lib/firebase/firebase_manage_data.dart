@@ -54,8 +54,7 @@ class FireBaseDataAccess extends GetxController {
                   usageName: productMap['usage'],
                   productId: productId.toString(),
                   minimumQuantity:
-                      int.tryParse(productMap['currentQuantity'].toString()) ??
-                          0,
+                      int.parse(productMap['minQuantity'].toString()),
                   currentQuantity:
                       int.tryParse(productMap['currentQuantity'].toString()) ??
                           0,
@@ -73,7 +72,7 @@ class FireBaseDataAccess extends GetxController {
           } else {
             userProducts.value = [];
             if (kDebugMode) {
-              print('user have no registered devices');
+              print('user has no registered products');
             }
           }
         },
@@ -140,10 +139,12 @@ class FireBaseDataAccess extends GetxController {
       await dbRef
           .child('users/$_userUid/registeredDevices/$productId')
           .set(null);
-      await dbRef
-          .child(
-              'products/$productName/$productId/notificationTokens/$_userUid')
-          .set(null);
+      if (!AppInit.isWeb) {
+        await dbRef
+            .child(
+                'products/$productName/$productId/notificationTokens/$_userUid')
+            .set(null);
+      }
     }
   }
 
