@@ -1,10 +1,12 @@
 import 'package:assistantpro/authentication/exception_errors/password_reset_exceptions.dart';
+import 'package:assistantpro/firebase/firebase_manage_data.dart';
 import 'package:assistantpro/src/constants/common_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../src/features/authentication/screens/login_screen.dart';
 import 'exception_errors/signin_email_password_exceptions.dart';
 import 'exception_errors/signup_email_password_exceptions.dart';
 
@@ -154,8 +156,25 @@ class AuthenticationRepository extends GetxController {
     return returnMessage;
   }
 
-  Future<void> logoutUser() async {
+  Future<void> logoutUserAuth() async {
     await googleSignIn?.signOut();
     await _auth.signOut();
+  }
+
+  Future<void> logoutUser() async {
+    for (var product in FireBaseDataAccess.instance.userProducts) {
+      await mqttClient.client.unsubscribe(product.getGetTopic());
+    }
+    await mqttClient.client.disconnect();
+    await FireBaseDataAccess.instance
+        .onLogoutDeleteTokens()
+        .then((value) async {
+      await AuthenticationRepository.instance.logoutUser().then(
+        (value) {
+          Get.offAll(() => const LoginScreen());
+          Get.delete<FireBaseDataAccess>();
+        },
+      );
+    });
   }
 }
