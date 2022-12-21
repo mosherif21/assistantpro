@@ -169,7 +169,7 @@ class AuthenticationRepository extends GetxController {
     await FireBaseDataAccess.instance
         .onLogoutDeleteTokens()
         .then((value) async {
-      await AuthenticationRepository.instance.logoutUser().then(
+      await logoutUserAuth().then(
         (value) {
           Get.offAll(() => const LoginScreen());
           Get.delete<FireBaseDataAccess>();
