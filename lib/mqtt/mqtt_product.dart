@@ -26,8 +26,10 @@ class MQTTProductHandler {
           final MqttPublishMessage recMess = c[0].payload;
           var message =
               MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-          if (kDebugMode) print('You got a new count');
-          if (kDebugMode) print(message);
+          if (kDebugMode) {
+            print('You got a new count');
+            print(message);
+          }
           countTracker.value = int.parse(message);
         },
       );
@@ -38,18 +40,13 @@ class MQTTProductHandler {
     int currentQuantitySet = int.parse(currentQuantity);
     if (currentQuantitySet != currentSet) {
       currentSet = currentQuantitySet;
-      _publishMessage(currentQuantity, topicName);
+      final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
+      builder.addString(currentQuantity);
+      if (kDebugMode) {
+        print('Publishing message "$currentQuantity" to topic $topicName');
+      }
+      client.publishMessage(topicName, MqttQos.exactlyOnce, builder.payload!);
     }
-  }
-
-  void _publishMessage(String message, String topicName) {
-    final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
-    builder.addString(message);
-    final builderPayload = builder.payload;
-    if (kDebugMode) {
-      print('Publishing message "$message" to topic $topicName');
-    }
-    client.publishMessage(topicName, MqttQos.exactlyOnce, builderPayload!);
   }
 
   Future<void> cancelSubscription(String topicName) async {
