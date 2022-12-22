@@ -22,7 +22,7 @@ List<OnBoardingPageTemplate> pages = [
     titleSubTextColor: Colors.white70,
   ),
   OnBoardingPageTemplate(
-    onBoardingBackGroundColor: Colors.yellow,
+    onBoardingBackGroundColor: Colors.blueGrey,
     onBoardingAnim: kOnBoardingAnim3,
     onBoardingTitle: 'onBoardingTitle3'.tr,
     onBoardingSubTitle: 'onBoardingSubTitle3'.tr,
@@ -30,7 +30,7 @@ List<OnBoardingPageTemplate> pages = [
     titleSubTextColor: Colors.white70,
   ),
   OnBoardingPageTemplate(
-    onBoardingBackGroundColor: Colors.green,
+    onBoardingBackGroundColor: Colors.deepPurpleAccent,
     onBoardingAnim: kOnBoardingAnim4,
     onBoardingTitle: 'onBoardingTitle4'.tr,
     onBoardingSubTitle: 'onBoardingSubTitle4'.tr,
@@ -38,7 +38,7 @@ List<OnBoardingPageTemplate> pages = [
     titleSubTextColor: Colors.white70,
   ),
   OnBoardingPageTemplate(
-    onBoardingBackGroundColor: Colors.lightBlue,
+    onBoardingBackGroundColor: Colors.blueAccent,
     onBoardingAnim: kOnBoardingAnim5,
     onBoardingTitle: 'onBoardingTitle5'.tr,
     onBoardingSubTitle: 'onBoardingSubTitle5'.tr,
