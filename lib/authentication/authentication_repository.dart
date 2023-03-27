@@ -115,7 +115,7 @@ class AuthenticationRepository extends GetxController {
       googleSignIn = kIsWeb
           ? GoogleSignIn(
               clientId:
-                  '115591952018-55tds54bjplo4hdc4ocsea6j1em048td.apps.googleusercontent.com')
+                  'YOUR_WEB_CLIENT_ID')
           : GoogleSignIn();
       final googleSignInAccount = await googleSignIn?.signIn();
       if (googleSignInAccount != null) {
