@@ -4,6 +4,6 @@ IoT Assistant
 
 ## Getting Started
 
-This an IoT assistant (hamada helal).
+IoT refrigerator assistant app.
 
 
