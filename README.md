@@ -6,5 +6,5 @@ IoT Assistant
 
 IoT refrigerator assistant app.
 
-DEVELOPED BY: ABDALAH HOSSAM 
+DEVELOPED BY: ABDALAH HOSSAM ,
               MOHAMED SHERIF
